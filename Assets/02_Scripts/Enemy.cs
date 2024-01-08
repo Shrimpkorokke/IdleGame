@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     
     public void GetDamage(BigInteger damage)
     {
+        FloatingTextController.I.CreateFloatingText(damage.ToString(), transform);
         hp -= damage;
         print($"GetDamage hp: {hp}, damage: {damage}");
 
