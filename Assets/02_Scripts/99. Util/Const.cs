@@ -9,7 +9,7 @@ public class Const
     public const string EQUIPMENT = "장비";
     public const string DUNGEON = "던전";
 
-    public const string TRAINNING = "훈련";
+    public const string TRAINING = "훈련";
     public const string ABILITY = "특성";
 
 }

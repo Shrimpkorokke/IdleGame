@@ -17,6 +17,14 @@ public class PopupGrowth : Popup
     private enum GrowthType {Training, Ability}
 
     private GrowthType growthType;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        btnTraining.onClick.AddListener(() => ToggleContent(GrowthType.Training));
+        btnAbility.onClick.AddListener(() => ToggleContent(GrowthType.Ability));
+    }
+
     private void OnEnable()
     {
         Init();
@@ -24,11 +32,24 @@ public class PopupGrowth : Popup
 
     private void Init()
     {
-        growthType = GrowthType.Training;
+        ToggleContent(GrowthType.Training);
     }
 
     private void ToggleContent(GrowthType growthType)
     {
-        txtTitle.text = "";
+        this.growthType = growthType;
+        
+        // 일단은 이렇게 나중에 localization 테이블 만들어서 사용하기
+        if (growthType == GrowthType.Training)
+        {
+            txtTitle.text = Const.TRAINING;
+        }
+        else if (growthType == GrowthType.Ability)
+        {
+            txtTitle.text = Const.ABILITY;
+        }
+        
+        contentTraining.SetActive(growthType == GrowthType.Training);
+        contentAbility.SetActive(growthType == GrowthType.Ability);
     }
 }
