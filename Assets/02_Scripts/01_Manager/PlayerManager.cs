@@ -1,28 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
-    public GameObject player;
+    [HideInInspector] public bool isReady;
+    [HideInInspector] public GameObject player;
     public int basePower;
     public float baseSpeed;
-    public float baseCriRate;
-    public float baseCriDmg;
-    public float dmgPower;
+    [HideInInspector] public float baseCriRate;
+    [HideInInspector] public float baseCriDmg;
+    [HideInInspector] public float dmgPower;
     
     public int attPowerLv;
     public int attSpeedLv;
-    public int criRateLv;
-    public int criDamageLv;
-    public int dmgPowerLv;
+    [HideInInspector] public int criRateLv;
+    [HideInInspector] public int criDamageLv;
+    [HideInInspector] public int dmgPowerLv;
     
-    public int attPowerSuperLv;
-    public int attSpeedSuperLv;
-    public int criRateSuperLv;
-    public int criDamageSuperLv;
-    public int dmgPowerSuperLv;
+    [HideInInspector] public int attPowerSuperLv;
+    [HideInInspector] public int attSpeedSuperLv;
+    [HideInInspector] public int criRateSuperLv;
+    [HideInInspector] public int criDamageSuperLv;
+    [HideInInspector] public int dmgPowerSuperLv;
     
     private void Awake()
     {
@@ -34,5 +36,18 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         baseCriRate = DefaultTable.PlayerStat.GetList()[0].criRate;
         baseCriDmg = DefaultTable.PlayerStat.GetList()[0].criDamage;
         dmgPower = DefaultTable.PlayerStat.GetList()[0].dmgPower;
+    }
+
+    IEnumerator AAA()
+    {
+        yield return new WaitForSeconds(3f);
+        isReady = true;
+    }
+    
+    public float GetAttSpeed()
+    {
+        var a = DefaultTable.Training.TrainingList.FirstOrDefault(x => x.TrainingGrade == TrainingGrade.Normal &&
+                                                                       x.TrainingType == TrainingType.AttSpeed);
+        return baseSpeed - a.AdditionalVal;
     }
 }

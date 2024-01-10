@@ -9,7 +9,7 @@ public class Training : MonoBehaviour
 
     private void Awake()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     private void Init()
