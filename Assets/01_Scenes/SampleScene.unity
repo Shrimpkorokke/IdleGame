@@ -288,7 +288,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e82677856f3ac4c4890a6ac532faff58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReady: 0
   player: {fileID: 0}
+  attPowerLv: 0
+  attSpeedLv: 0
+  criRateLv: 0
+  criDamageLv: 0
+  dmgPowerLv: 0
+  attPowerSuperLv: 0
+  attSpeedSuperLv: 0
+  criRateSuperLv: 0
+  criDamageSuperLv: 0
+  dmgPowerSuperLv: 0
 --- !u!1 &61852905
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,6 +1696,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d5e6439f5c23b49a7348219d1df775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon: {fileID: 1670424540}
+  ani: {fileID: 1670424541}
+  basePower: 0
+  baseSpeed: 0
+  baseCriRate: 0
+  baseCriDmg: 0
+  dmgPower: 0
 --- !u!1 &351663950
 GameObject:
   m_ObjectHideFlags: 0

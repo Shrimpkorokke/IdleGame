@@ -7,12 +7,8 @@ using UnityEngine;
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
     [HideInInspector] public bool isReady;
-    [HideInInspector] public GameObject player;
-    public int basePower;
-    public float baseSpeed;
-    [HideInInspector] public float baseCriRate;
-    [HideInInspector] public float baseCriDmg;
-    [HideInInspector] public float dmgPower;
+    [HideInInspector] public Player player;
+    
     
     public int attPowerLv;
     public int attSpeedLv;
@@ -29,13 +25,14 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     private void Awake()
     {
         if(player == null)
-            player = GameObject.Find("Player");
+            player = GameObject.Find("Player").GetComponent<Player>();
 
-        basePower = DefaultTable.PlayerStat.GetList()[0].attPower;
-        baseSpeed = DefaultTable.PlayerStat.GetList()[0].attSpeed;
-        baseCriRate = DefaultTable.PlayerStat.GetList()[0].criRate;
-        baseCriDmg = DefaultTable.PlayerStat.GetList()[0].criDamage;
-        dmgPower = DefaultTable.PlayerStat.GetList()[0].dmgPower;
+        player.basePower = DefaultTable.PlayerStat.GetList()[0].attPower;
+        player.baseSpeed = DefaultTable.PlayerStat.GetList()[0].attSpeed;
+        player.baseCriRate = DefaultTable.PlayerStat.GetList()[0].criRate;
+        player.baseCriDmg = DefaultTable.PlayerStat.GetList()[0].criDamage;
+        player.dmgPower = DefaultTable.PlayerStat.GetList()[0].dmgPower;
+        StartCoroutine(AAA());
     }
 
     IEnumerator AAA()
@@ -44,10 +41,5 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         isReady = true;
     }
     
-    public float GetAttSpeed()
-    {
-        var a = DefaultTable.Training.TrainingList.FirstOrDefault(x => x.TrainingGrade == TrainingGrade.Normal &&
-                                                                       x.TrainingType == TrainingType.AttSpeed);
-        return baseSpeed - a.AdditionalVal;
-    }
+    
 }
