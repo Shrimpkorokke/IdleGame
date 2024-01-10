@@ -14,10 +14,6 @@ public class PopupGrowth : Popup
     [SerializeField, GetComponentInChildrenName("Content_Training")] private GameObject contentTraining;
     [SerializeField, GetComponentInChildrenName("Content_Ability")] private GameObject contentAbility;
 
-    private enum GrowthType {Training, Ability}
-
-    private GrowthType growthType;
-
     protected override void Awake()
     {
         base.Awake();
@@ -37,8 +33,6 @@ public class PopupGrowth : Popup
 
     private void ToggleContent(GrowthType growthType)
     {
-        this.growthType = growthType;
-        
         // 일단은 이렇게 나중에 localization 테이블 만들어서 사용하기
         if (growthType == GrowthType.Training)
         {
