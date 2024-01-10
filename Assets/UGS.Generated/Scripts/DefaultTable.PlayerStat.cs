@@ -17,52 +17,50 @@ using UnityEngine;
 namespace DefaultTable
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class Training : ITable
+    public partial class PlayerStat : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<Training> loadedList, Dictionary<int, Training> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<PlayerStat> loadedList, Dictionary<int, PlayerStat> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "1FIWfXsYk2z0BQKoW8tzYQOivhN4x56AbB1AQ_aaEPAw"; // it is file id
-        static string sheetID = "0"; // it is sheet id
+        static string sheetID = "56186787"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, Training> TrainingMap = new Dictionary<int, Training>();  
-        public static List<Training> TrainingList = new List<Training>();   
+        public static Dictionary<int, PlayerStat> PlayerStatMap = new Dictionary<int, PlayerStat>();  
+        public static List<PlayerStat> PlayerStatList = new List<PlayerStat>();   
 
         /// <summary>
-        /// Get Training List 
+        /// Get PlayerStat List 
         /// Auto Load
         /// </summary>
-        public static List<Training> GetList()
+        public static List<PlayerStat> GetList()
         {{
            if (isLoaded == false) Load();
-           return TrainingList;
+           return PlayerStatList;
         }}
 
         /// <summary>
-        /// Get Training Dictionary, keyType is your sheet A1 field type.
+        /// Get PlayerStat Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, Training>  GetDictionary()
+        public static Dictionary<int, PlayerStat>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return TrainingMap;
+           return PlayerStatMap;
         }}
 
     
 
 /* Fields. */
 
-		public System.Int32 TID;
-		public GrowthType GrowthType;
-		public TrainingGrade TrainingGrade;
-		public TrainingType TrainingType;
-		public System.Single AdditionalVal;
-		public System.Int32 IsRate;
-		public System.Int32 MaxLevel;
+		public System.Int32 attPower;
+		public System.Int32 attSpeed;
+		public System.Single criRate;
+		public System.Single criDamage;
+		public System.Single dmgPower;
   
 
 #region fuctions
@@ -73,7 +71,7 @@ namespace DefaultTable
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("Training is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("PlayerStat is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -89,7 +87,7 @@ namespace DefaultTable
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<Training>, Dictionary<int, Training>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<PlayerStat>, Dictionary<int, PlayerStat>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -117,14 +115,14 @@ namespace DefaultTable
                
 
 
-    public static (List<Training> list, Dictionary<int, Training> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, Training> Map = new Dictionary<int, Training>();
-            List<Training> List = new List<Training>();     
+    public static (List<PlayerStat> list, Dictionary<int, PlayerStat> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, PlayerStat> Map = new Dictionary<int, PlayerStat>();
+            List<PlayerStat> List = new List<PlayerStat>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(Training).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(PlayerStat).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["Training"];
+            var sheet = jsonObject["PlayerStat"];
 
             foreach (var column in sheet.Keys)
             {
@@ -143,7 +141,7 @@ namespace DefaultTable
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            Training instance = new Training();
+                            PlayerStat instance = new PlayerStat();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -180,12 +178,12 @@ namespace DefaultTable
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.TID, instance);
+                            Map.Add(instance.attPower, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            TrainingList = List;
-                            TrainingMap = Map;
+                            PlayerStatList = List;
+                            PlayerStatMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -195,10 +193,10 @@ namespace DefaultTable
 
  
 
-        public static void Write(Training data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(PlayerStat data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(Training).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(PlayerStat).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {
