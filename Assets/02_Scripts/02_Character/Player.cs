@@ -56,4 +56,13 @@ public class Player : MonoBehaviour
         print($"GetGrowthAttSpeed {1 + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID]}");
         return 1 + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
     }
+    
+    public float GetGrowthAttPower()
+    {
+        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
+                                                          x.TrainingType == TrainingType.AttPower);
+        print($"111111 {a.AdditionalVal}");
+        print($"GetGrowthAttPower {basePower + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID]}");
+        return basePower + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+    }
 }
