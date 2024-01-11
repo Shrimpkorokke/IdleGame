@@ -9,9 +9,6 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public Player player;
     public bool isReady;
     public bool isAttack;
-    
-    public List<TrainingStat> trainingList = new();
-    public List<AbilityStat> abilityStatList = new();
 
     #region Training_Normal_Level
     public int attPowerLv;
@@ -44,8 +41,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         player.basePower = DefaultTable.PlayerStat.GetList()[0].attPower;
         player.baseSpeed = DefaultTable.PlayerStat.GetList()[0].attSpeed;
         player.baseCriRate = DefaultTable.PlayerStat.GetList()[0].criRate;
-        player.baseCriDmg = DefaultTable.PlayerStat.GetList()[0].criDamage;
-        player.dmgPower = DefaultTable.PlayerStat.GetList()[0].dmgPower;
+        player.baseCriDmgRate = DefaultTable.PlayerStat.GetList()[0].criDamage;
+        player.finalDamageRate = DefaultTable.PlayerStat.GetList()[0].dmgPower;
         
         foreach (var VARIABLE in DefaultTable.Training.GetList())
         {
@@ -108,14 +105,4 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         }
     }
   
-}
-
-public struct TrainingStat
-{
-    
-}
-
-public struct AbilityStat
-{
-    
 }

@@ -23,7 +23,7 @@ public enum TrainingType
     AttPower,
     AttSpeed,
     CriRate,
-    CriDamage,
-    DmgPower
+    CriDamageRate,
+    FinalDamageRate
 }
 

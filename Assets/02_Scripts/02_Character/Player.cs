@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class Player : MonoBehaviour
     public int basePower;
     public float baseSpeed;
     [HideInInspector] public float baseCriRate;
-    [HideInInspector] public float baseCriDmg;
-    [HideInInspector] public float dmgPower;
+    [HideInInspector] public float baseCriDmgRate;
+    [HideInInspector] public float finalDamageRate;
     void Start()
     {
         StartCoroutine(Attack());
@@ -64,5 +65,26 @@ public class Player : MonoBehaviour
         print($"111111 {a.AdditionalVal}");
         print($"GetGrowthAttPower {basePower + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID]}");
         return basePower + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+    }
+    
+    public float GetGrowthCriRate()
+    {
+        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
+                                                          x.TrainingType == TrainingType.CriRate);
+        return baseCriRate + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+    }
+    
+    public float GetGrowthCriDamageRate()
+    {
+        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
+                                                          x.TrainingType == TrainingType.CriDamageRate);
+        return baseCriDmgRate + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+    }
+    
+    public float GetGrowthFinalDamageRate()
+    {
+        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
+                                                          x.TrainingType == TrainingType.FinalDamageRate);
+        return finalDamageRate + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
     }
 }
