@@ -7,9 +7,9 @@ public class Training : MonoBehaviour
 {
     [SerializeField, GetComponentInChildren(true)] private List<GrowthButton> growthButtonList;
 
-    private void Awake()
+    private void OnEnable()
     {
-        //throw new NotImplementedException();
+        Init();
     }
 
     private void Init()

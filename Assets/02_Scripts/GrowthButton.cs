@@ -9,27 +9,11 @@ public class GrowthButton : MonoBehaviour
     public GrowthType growthType;
     public TrainingGrade trainingGrade;
     public TrainingType trainingType;
-
+    public int TID;
     public void Init()
     {
-        
-    }
-
-    public void AA()
-    {
-        if (growthType == GrowthType.Training)
-        {
-            var a = DefaultTable.Training.TrainingList.FirstOrDefault(x => x.GrowthType == growthType &&
-                                                                           x.TrainingGrade == trainingGrade &&
-                                                                           x.TrainingType == trainingType);
-            if (PlayerManager.I.attPowerLv < a.MaxLevel)
-            {
-                PlayerManager.I.attPowerLv++;
-            }
-        }
-        else if (growthType == GrowthType.Ability)
-        {
+        if(TID == 0)
             
-        }
+        btn.onClick.AddListener(()=>PlayerManager.I.IncreaseGrowth(this));
     }
 }

@@ -288,8 +288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e82677856f3ac4c4890a6ac532faff58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 331267215}
   isReady: 0
-  player: {fileID: 0}
+  isAttack: 0
   attPowerLv: 0
   attSpeedLv: 0
   criRateLv: 0
@@ -300,6 +301,7 @@ MonoBehaviour:
   criRateSuperLv: 0
   criDamageSuperLv: 0
   dmgPowerSuperLv: 0
+  rayLength: 0.9
 --- !u!1 &61852905
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,6 +745,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 1
   trainingType: 4
+  TID: 100000
 --- !u!1 &185615128
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,6 +2659,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 1
   trainingType: 1
+  TID: 70000
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2887,6 +2891,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 0
   trainingType: 1
+  TID: 20000
 --- !u!1 &533534921
 GameObject:
   m_ObjectHideFlags: 0
@@ -4083,6 +4088,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 1
   trainingType: 2
+  TID: 80000
 --- !u!1001 &790996097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4667,6 +4673,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 1
   trainingType: 0
+  TID: 60000
 --- !u!1 &939829556
 GameObject:
   m_ObjectHideFlags: 0
@@ -4837,7 +4844,7 @@ GameObject:
   - component: {fileID: 958203273}
   - component: {fileID: 958203271}
   - component: {fileID: 958203274}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -5664,6 +5671,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 0
   trainingType: 2
+  TID: 30000
 --- !u!1 &1184746823
 GameObject:
   m_ObjectHideFlags: 0
@@ -6309,6 +6317,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 1
   trainingType: 3
+  TID: 90000
 --- !u!1 &1416039709
 GameObject:
   m_ObjectHideFlags: 0
@@ -6868,6 +6877,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 0
   trainingType: 3
+  TID: 40000
 --- !u!1 &1516767328
 GameObject:
   m_ObjectHideFlags: 0
@@ -7504,6 +7514,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 0
   trainingType: 4
+  TID: 50000
 --- !u!1 &1697308774
 GameObject:
   m_ObjectHideFlags: 0
@@ -7673,6 +7684,7 @@ MonoBehaviour:
   growthType: 0
   trainingGrade: 0
   trainingType: 0
+  TID: 10000
 --- !u!1 &1728031866
 GameObject:
   m_ObjectHideFlags: 0

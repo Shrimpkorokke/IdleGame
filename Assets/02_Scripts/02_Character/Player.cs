@@ -20,35 +20,38 @@ public class Player : MonoBehaviour
         DefaultTable.Training.GetList();
     }
 
+    private void Update()
+    {
+        
+    }
+
     IEnumerator Attack()
     {
         while (true)
         {
-            if (PlayerManager.I.isReady == true)
-            {
-                yield return new WaitForSeconds(GetAttSpeed());
-                AttackAnim();
-            }
-
+            AttackAnim();
             yield return null;
         }
     }
 
     public void AttackAnim()
     {
-        print("AAAAAAAA");
         //ani.Play("Pickaxe_Attack");
         //ani.SetTrigger("onAttack");
-        ani.SetBool("isAttack", true);
-        
+        ani.SetBool("isAttack", PlayerManager.I.isAttack);
     }
     
-    // ReSharper disable Unity.PerformanceAnalysis
-    public float GetAttSpeed()
+    public void SetAttackSpeed()
+    {
+        ani.SetFloat("attackSpeed", GetGrowthAttSpeed());
+    }
+    
+      
+    public float GetGrowthAttSpeed()
     {
         var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
-                                                  x.TrainingType == TrainingType.AttSpeed);
-        print(baseSpeed - a.AdditionalVal * PlayerManager.I.attSpeedLv);
-        return 1f - a.AdditionalVal;
+                                                          x.TrainingType == TrainingType.AttSpeed);
+        print(a.AdditionalVal * PlayerManager.I.attSpeedLv);
+        return 1 + a.AdditionalVal * PlayerManager.I.attSpeedLv;
     }
 }
