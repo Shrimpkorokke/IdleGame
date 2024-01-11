@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     
     public void SetAttackSpeed()
     {
+        print("SetAttackSpeed");
         ani.SetFloat("attackSpeed", GetGrowthAttSpeed());
     }
     
@@ -51,7 +52,8 @@ public class Player : MonoBehaviour
     {
         var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
                                                           x.TrainingType == TrainingType.AttSpeed);
-        print(a.AdditionalVal * PlayerManager.I.attSpeedLv);
-        return 1 + a.AdditionalVal * PlayerManager.I.attSpeedLv;
+        print($"111111 {a.AdditionalVal}");
+        print($"GetGrowthAttSpeed {1 + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID]}");
+        return 1 + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
     }
 }

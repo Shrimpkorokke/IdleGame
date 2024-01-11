@@ -35,7 +35,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     #endregion
     
     // tid, level
-    private Dictionary<int, int> skillDic = new();
+    public Dictionary<int, int> skillLevelDic = new();
     private void Awake()
     {
         if(player == null)
@@ -46,9 +46,16 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         player.baseCriRate = DefaultTable.PlayerStat.GetList()[0].criRate;
         player.baseCriDmg = DefaultTable.PlayerStat.GetList()[0].criDamage;
         player.dmgPower = DefaultTable.PlayerStat.GetList()[0].dmgPower;
-        StartCoroutine(WaitforReady());
+        
+        foreach (var VARIABLE in DefaultTable.Training.GetList())
+        {
+            // 추후 저장된 값을 집어 넣기 
+            skillLevelDic[VARIABLE.TID] = 0;
+        }
         
         player.SetAttackSpeed();
+        
+        StartCoroutine(WaitforReady());
     }
 
     private void Update()
@@ -85,14 +92,18 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     {
         int tid = growthButton.TID;
         var a = DefaultTable.Training.GetList().Find(x => x.TID == growthButton.TID);
-        if (skillDic.ContainsKey(tid))
+        if (skillLevelDic.ContainsKey(tid))
         {
-            if (skillDic[tid] < a.MaxLevel)
+            if (skillLevelDic[tid] < a.MaxLevel)
             {
                 // 스킬레벨 증가
-                skillDic[tid]++;
-                
+                skillLevelDic[tid]++;
+                print("skill level up");   
                 // UI 관련 스크립트 추가할 것
+                if (a.TrainingType == TrainingType.AttSpeed)
+                {
+                    player.SetAttackSpeed();
+                }
             }
         }
     }

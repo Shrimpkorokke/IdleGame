@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     {
         FloatingTextController.I.CreateFloatingText(damage.ToString(), transform);
         hp -= damage;
-        print($"GetDamage hp: {hp}, damage: {damage}");
+        //print($"GetDamage hp: {hp}, damage: {damage}");
 
         if (hp <= 0)
         {
@@ -21,6 +21,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        print("Die");
+        //print("Die");
     }
 }

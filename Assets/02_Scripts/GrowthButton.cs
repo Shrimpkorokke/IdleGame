@@ -12,8 +12,6 @@ public class GrowthButton : MonoBehaviour
     public int TID;
     public void Init()
     {
-        if(TID == 0)
-            
         btn.onClick.AddListener(()=>PlayerManager.I.IncreaseGrowth(this));
     }
 }
