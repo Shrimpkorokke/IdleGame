@@ -13,6 +13,9 @@ public class Scroller : MonoBehaviour
 
     void Update()
     {
+        if (PlayerManager.I.isAttack)
+            return;
+        
         transform.Translate(speedRate * Time.deltaTime * -1f , 0, 0);
     }
 }
