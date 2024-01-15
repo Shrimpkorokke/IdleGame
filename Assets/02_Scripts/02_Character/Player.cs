@@ -51,20 +51,39 @@ public class Player : MonoBehaviour
       
     public float GetGrowthAttSpeed()
     {
-        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
-                                                          x.TrainingType == TrainingType.AttSpeed);
-        print($"111111 {a.AdditionalVal}");
-        print($"GetGrowthAttSpeed {1 + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID]}");
-        return 1 + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+        /*var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
+                                                          x.TrainingType == TrainingType.AttSpeed);*/
+        
+        var attSpeedList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.AttSpeed);
+        float additionalVal = 1;
+        foreach (var UPPER in attSpeedList)
+        {
+            additionalVal += UPPER.AdditionalVal * PlayerManager.I.skillLevelDic[UPPER.TID];
+        }
+        print($"공격 속도: {baseSpeed * additionalVal}");
+        return baseSpeed * additionalVal;
+        
     }
     
     public float GetGrowthAttPower()
     {
-        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
-                                                          x.TrainingType == TrainingType.AttPower);
-        print($"111111 {a.AdditionalVal}");
-        print($"GetGrowthAttPower {basePower + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID]}");
-        return basePower + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+        var normalAttPower = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.AttPower).OrderBy(x => x.IsRate);
+        float finalPower = basePower;
+        foreach (var VARIABLE in normalAttPower)
+        {
+            // Rate가 아닐 때
+            if (VARIABLE.IsRate == 0)
+            {
+                finalPower += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+            }
+            // Rate일 때
+            else
+            {
+                finalPower *= 1 + VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+            }
+        }
+        
+        return finalPower;
     }
     
     public float GetGrowthCriRate()
