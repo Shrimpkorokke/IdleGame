@@ -12,9 +12,9 @@ public class Player : MonoBehaviour
     
     public int basePower;
     public float baseSpeed;
-    [HideInInspector] public float baseCriRate;
-    [HideInInspector] public float baseCriDmgRate;
-    [HideInInspector] public float finalDamageRate;
+    public float baseCriRate;
+    public float baseCriDmgRate;
+    public float baseFinalDamageRate;
     void Start()
     {
         StartCoroutine(Attack());
@@ -51,25 +51,22 @@ public class Player : MonoBehaviour
       
     public float GetGrowthAttSpeed()
     {
-        /*var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
-                                                          x.TrainingType == TrainingType.AttSpeed);*/
-        
         var attSpeedList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.AttSpeed);
-        float additionalVal = 1;
-        foreach (var UPPER in attSpeedList)
+        float additionalVal = 0;
+        foreach (var VARIABLE in attSpeedList)
         {
-            additionalVal += UPPER.AdditionalVal * PlayerManager.I.skillLevelDic[UPPER.TID];
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
         }
-        print($"공격 속도: {baseSpeed * additionalVal}");
-        return baseSpeed * additionalVal;
+        //print($"공격 속도: {baseSpeed * additionalVal}");
+        return baseSpeed * 1 + additionalVal;
         
     }
     
     public float GetGrowthAttPower()
     {
-        var normalAttPower = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.AttPower).OrderBy(x => x.IsRate);
+        var attPowerList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.AttPower).OrderBy(x => x.IsRate);
         float finalPower = basePower;
-        foreach (var VARIABLE in normalAttPower)
+        foreach (var VARIABLE in attPowerList)
         {
             // Rate가 아닐 때
             if (VARIABLE.IsRate == 0)
@@ -79,7 +76,7 @@ public class Player : MonoBehaviour
             // Rate일 때
             else
             {
-                finalPower *= 1 + VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+                finalPower += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
             }
         }
         
@@ -88,22 +85,34 @@ public class Player : MonoBehaviour
     
     public float GetGrowthCriRate()
     {
-        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
-                                                          x.TrainingType == TrainingType.CriRate);
-        return baseCriRate + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+        var criRateList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.CriRate);
+        float additionalVal = 0;
+        foreach (var VARIABLE in criRateList)
+        {
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+        }
+        return baseCriRate * 1 + additionalVal;
     }
     
     public float GetGrowthCriDamageRate()
     {
-        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
-                                                          x.TrainingType == TrainingType.CriDamageRate);
-        return baseCriDmgRate + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+        var criDmgRateList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.CriDamageRate);
+        float additionalVal = 0;
+        foreach (var VARIABLE in criDmgRateList)
+        {
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+        }
+        return baseCriDmgRate * 1 + additionalVal;
     }
     
     public float GetGrowthFinalDamageRate()
     {
-        var a = DefaultTable.Training.GetList().Find(x => x.TrainingGrade == TrainingGrade.Normal &&
-                                                          x.TrainingType == TrainingType.FinalDamageRate);
-        return finalDamageRate + a.AdditionalVal * PlayerManager.I.skillLevelDic[a.TID];
+        var finalDmgRateList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.FinalDamageRate);
+        float additionalVal = 0;
+        foreach (var VARIABLE in finalDmgRateList)
+        {
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+        }
+        return baseFinalDamageRate + additionalVal;
     }
 }

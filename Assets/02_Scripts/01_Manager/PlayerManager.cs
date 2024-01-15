@@ -42,7 +42,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         player.baseSpeed = DefaultTable.PlayerStat.GetList()[0].attSpeed;
         player.baseCriRate = DefaultTable.PlayerStat.GetList()[0].criRate;
         player.baseCriDmgRate = DefaultTable.PlayerStat.GetList()[0].criDamage;
-        player.finalDamageRate = DefaultTable.PlayerStat.GetList()[0].dmgPower;
+        player.baseFinalDamageRate = DefaultTable.PlayerStat.GetList()[0].finalDamage;
         
         foreach (var VARIABLE in DefaultTable.Training.GetList())
         {

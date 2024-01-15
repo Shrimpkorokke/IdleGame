@@ -11,18 +11,18 @@ public class Weapon : MonoBehaviour
     {
         if (collider2D.gameObject.CompareTag("Enemy"))
         {
-            var a = new AAA();
-            a.attPower = PlayerManager.I.player.GetGrowthAttPower();
-            a.criRate = PlayerManager.I.player.GetGrowthCriRate();
-            a.criDamageRate = PlayerManager.I.player.GetGrowthCriDamageRate();
-            a.finalDamageRate = PlayerManager.I.player.GetGrowthFinalDamageRate();
+            var info = new AttackInfo();
+            info.attPower = PlayerManager.I.player.GetGrowthAttPower();
+            info.criRate = PlayerManager.I.player.GetGrowthCriRate();
+            info.criDamageRate = PlayerManager.I.player.GetGrowthCriDamageRate();
+            info.finalDamageRate = PlayerManager.I.player.GetGrowthFinalDamageRate();
             
-            collider2D.gameObject.GetComponent<Enemy>()?.GetDamage(a);
+            collider2D.gameObject.GetComponent<Enemy>()?.GetDamage(info);
         }
     }   
 }
 
-public struct AAA
+public struct AttackInfo
 {
     // 공격력
     public float attPower;

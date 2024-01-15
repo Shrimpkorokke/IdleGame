@@ -60,7 +60,7 @@ namespace DefaultTable
 		public System.Int32 attSpeed;
 		public System.Single criRate;
 		public System.Single criDamage;
-		public System.Single dmgPower;
+		public System.Single finalDamage;
   
 
 #region fuctions
