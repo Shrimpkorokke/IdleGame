@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UniRx;
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
     public Player player;
@@ -32,7 +32,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     #endregion
     
     // tid, level
-    public Dictionary<int, int> skillLevelDic = new();
+    public ReactiveDictionary<int, int> skillLevelDic = new();
     private void Awake()
     {
         if(player == null)
@@ -88,21 +88,29 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public void IncreaseGrowth(GrowthButton growthButton)
     {
         int tid = growthButton.TID;
-        var a = DefaultTable.Training.GetList().Find(x => x.TID == growthButton.TID);
-        if (skillLevelDic.ContainsKey(tid))
+        var training = DefaultTable.Training.GetList().Find(x => x.TID == tid);
+        
+        if (skillLevelDic.ContainsKey(tid) == false)
+            return;
+        
+        if (skillLevelDic[tid] >= training.MaxLevel)
+            return;
+
+        skillLevelDic[tid]++;
+        
+        // UI 관련
+        if (skillLevelDic[tid] < training.MaxLevel)
         {
-            if (skillLevelDic[tid] < a.MaxLevel)
-            {
-                // 스킬레벨 증가
-                skillLevelDic[tid]++;
-                growthButton.txtLevel.text = $"Lv.{skillLevelDic[tid]}";
-                // UI 관련 스크립트 추가할 것
-                if (a.TrainingType == TrainingType.AttSpeed)
-                {
-                    player.SetAttackSpeed();
-                }
-            }
+            growthButton.txtLevel.text = $"Lv.{skillLevelDic[tid]}";
+        }
+        else
+        {
+            growthButton.txtLevel.text = $"Lv.Max";
+        }
+
+        if (training.TrainingType == TrainingType.AttSpeed)
+        {
+            player.SetAttackSpeed();
         }
     }
-  
 }

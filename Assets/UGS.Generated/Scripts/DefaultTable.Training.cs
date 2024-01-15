@@ -63,6 +63,8 @@ namespace DefaultTable
 		public System.Single AdditionalVal;
 		public System.Int32 IsRate;
 		public System.Int32 MaxLevel;
+		public System.Int32 UnlockTID;
+		public System.Int32 UnlockLevel;
   
 
 #region fuctions
