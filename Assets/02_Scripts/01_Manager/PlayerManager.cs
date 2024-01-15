@@ -95,7 +95,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             {
                 // 스킬레벨 증가
                 skillLevelDic[tid]++;
-                print("skill level up");   
+                growthButton.txtLevel.text = $"Lv.{skillLevelDic[tid]}";
                 // UI 관련 스크립트 추가할 것
                 if (a.TrainingType == TrainingType.AttSpeed)
                 {
