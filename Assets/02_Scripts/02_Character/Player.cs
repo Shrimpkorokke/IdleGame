@@ -8,7 +8,8 @@ using UnityEngine.Serialization;
 public class Player : MonoBehaviour
 {
     [SerializeField, GetComponentInChildren] private Weapon weapon;
-    [SerializeField, GetComponentInChildren] private Animator ani;
+    [SerializeField, GetComponent] private Animator playerAni;
+    [SerializeField, GetComponentInChildrenName("Pickaxe")] private Animator pickaxeAni;
     
     public int basePower;
     public float baseSpeed;
@@ -17,35 +18,41 @@ public class Player : MonoBehaviour
     public float baseFinalDamageRate;
     void Start()
     {
-        StartCoroutine(Attack());
-        DefaultTable.Training.GetList();
+        //StartCoroutine(Attack());
     }
 
     private void Update()
     {
-        
+        PickaxeAnim();
+        PlayerAnim();
     }
 
     IEnumerator Attack()
     {
         while (true)
         {
-            AttackAnim();
+            PickaxeAnim();
             yield return null;
         }
     }
+    
+    public void PlayerAnim()
+    {
+        playerAni.SetBool("isAttack", PlayerManager.I.isAttack);
+    }
 
-    public void AttackAnim()
+    public void PickaxeAnim()
     {
         //ani.Play("Pickaxe_Attack");
         //ani.SetTrigger("onAttack");
-        ani.SetBool("isAttack", PlayerManager.I.isAttack);
+        pickaxeAni.SetBool("isAttack", PlayerManager.I.isAttack);
     }
+
     
     public void SetAttackSpeed()
     {
         print("SetAttackSpeed");
-        ani.SetFloat("attackSpeed", GetGrowthAttSpeed());
+        pickaxeAni.SetFloat("attackSpeed", GetGrowthAttSpeed());
     }
     
       
