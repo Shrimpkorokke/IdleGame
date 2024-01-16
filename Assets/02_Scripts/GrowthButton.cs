@@ -12,7 +12,8 @@ public class GrowthButton : MonoBehaviour
 
     [GetComponentInChildrenName("Txt_Level")] public Text txtLevel;
     [GetComponentInChildrenName("Cover_Unlock")] public GameObject coverUnlock;
-
+    [GetComponentInChildrenName("Txt_Gold")] public Text txtGold;
+    
     public GrowthType growthType;
     public TrainingGrade trainingGrade;
     public TrainingType trainingType;
@@ -24,6 +25,7 @@ public class GrowthButton : MonoBehaviour
         if(btn != null)
             btn.SetButtonAction(() => PlayerManager.I.IncreaseGrowth(this));
         SubscribeToDictionary();
+        SetGoldTxt();
     }
     
     public void SubscribeToDictionary()
@@ -45,5 +47,11 @@ public class GrowthButton : MonoBehaviour
     public void AAAA()
     {
         coverUnlock.SetActive(false);
+    }
+
+    public void SetGoldTxt()
+    {
+        var training = DefaultTable.Training.GetList().Find(x => x.TID == TID);
+        txtGold.text = (training.LevelUpGold + ((1 + training.LevelUpGoldIncrease) * training.LevelUpGold * PlayerManager.I.skillLevelDic[TID])).ToString();
     }
 }

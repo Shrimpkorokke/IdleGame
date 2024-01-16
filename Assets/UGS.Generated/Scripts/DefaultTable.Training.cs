@@ -65,6 +65,8 @@ namespace DefaultTable
 		public System.Int32 MaxLevel;
 		public System.Int32 UnlockTID;
 		public System.Int32 UnlockLevel;
+		public System.Int32 LevelUpGold;
+		public System.Single LevelUpGoldIncrease;
   
 
 #region fuctions

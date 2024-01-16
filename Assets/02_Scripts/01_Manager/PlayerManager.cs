@@ -107,7 +107,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         {
             growthButton.txtLevel.text = $"Lv.Max";
         }
-
+        growthButton.SetGoldTxt();
         if (training.TrainingType == TrainingType.AttSpeed)
         {
             player.SetAttackSpeed();
