@@ -36,5 +36,20 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         Destroy(transform.parent.gameObject);
+        SpawnManager.I.DecreaseCount();
+
+        int gold = 0;
+        int stone = 0;
+        // 테이블을 참조하여 현재 스테이지에 해당하는 골드와, 스톤 값을 가지고 온다.
+        foreach (var VARIABLE in DefaultTable.StageMonster.GetList())
+        {
+            gold = Mathf.RoundToInt(VARIABLE.Gold_Base * (1 + VARIABLE.Gold_Increase * StageManager.I.currentStage));
+            stone = Mathf.RoundToInt(VARIABLE.Stone_Base * (1 + VARIABLE.Stone_Increase * StageManager.I.currentStage));
+        }
+        
+        // player의 PlayerManager의 gold와 stone값을 증가시킨다.
+        GoodsManager.I.IncreaseGold(gold);
+        GoodsManager.I.IncreaseStone(stone);
+
     }
 }

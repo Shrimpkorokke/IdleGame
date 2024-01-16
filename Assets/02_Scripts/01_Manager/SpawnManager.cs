@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : MonoSingleton<SpawnManager>
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float currentTime;
@@ -35,6 +35,16 @@ public class SpawnManager : MonoBehaviour
     private void SpawnEnemy()
     {
         GameObject instance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        IncreaseCount();
+    }
+
+    public void IncreaseCount()
+    {
         currentCount++;
+    }
+    
+    public void DecreaseCount()
+    {
+        currentCount--;
     }
 }
