@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     {
         float damage = attackInfo.attPower;
         float criRate = attackInfo.criRate * 1000;
-        Debug.Log($"크리티컬 확률: {criRate}");
+  
         // 크리티컬 확률 계산
         if (Random.Range(0, 1000) <= criRate)
         {
@@ -35,6 +35,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        //print("Die");
+        Destroy(transform.parent.gameObject);
     }
 }

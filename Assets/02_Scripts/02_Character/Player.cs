@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
