@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class SpawnManager : MonoSingleton<SpawnManager>
 {
-    [SerializeField] private Button BtnBoss;
+    [SerializeField] private Button btnBoss;
     
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private List<GameObject> enemyList = new();
@@ -25,7 +25,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     protected override void Awake()
     {
-        BtnBoss.onClick.AddListener(SpawnBoss);
+        btnBoss.onClick.AddListener(SpawnBoss);
+        ShowBtnBoss(false);
     }
 
     private void Start()
@@ -38,18 +39,18 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     {
         while (true)
         {
-            if (bossSpawned == false)
+            if (enemyList.Count < maxCount)
             {
-                if (enemyList.Count < maxCount)
+                float randomTime = UnityEngine.Random.Range(minTime, maxTime);
+                yield return new WaitForSeconds(randomTime);
+
+                if (bossSpawned == false)
                 {
-                    float randomTime = UnityEngine.Random.Range(minTime, maxTime);
-                    yield return new WaitForSeconds(randomTime);
                     SpawnEnemy();
+                    yield return null;
                 }
-            
-                yield return null;
             }
-            
+
             yield return null;
         }
     }
@@ -63,17 +64,30 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public void SpawnBoss()
     {
         bossSpawned = true;
+        ShowBtnBoss(false);
         
         GameObject instance = Instantiate(bossPrefab, new Vector3(transform.position.x, 1, 0), Quaternion.identity);
         for (int i = enemyList.Count - 1; i >= 0; i--)
         {
-            Debug.Log("AAAAAAAAAA");
-            Destroy(enemyList[i]);
+            GameObject go = enemyList[i];
+            enemyList.Remove(go);
+            Destroy(go);
         }
     }
 
+    public void DieBoss()
+    {
+        bossSpawned = false;
+        ShowBtnBoss(false);
+    }
+    
     public void RemoveEnemy(GameObject enemy)
     {
         enemyList.Remove(enemy);
+    }
+
+    public void ShowBtnBoss(bool show)
+    {
+        btnBoss.gameObject.SetActive(show);
     }
 }

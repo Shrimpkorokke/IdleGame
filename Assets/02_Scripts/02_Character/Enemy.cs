@@ -27,7 +27,9 @@ public class Enemy : MonoBehaviour
         
         // 체력 감소
         hp -= damage;
-
+        
+        StageManager.I.IncreaseCount(2);
+        
         if (hp.IntPart <= 0)
         {
             Die();
@@ -41,8 +43,8 @@ public class Enemy : MonoBehaviour
         // 테이블을 참조하여 현재 스테이지에 해당하는 골드와, 스톤 값을 가지고 온다.
         foreach (var VARIABLE in DefaultTable.StageMonster.GetList())
         {
-            gold = Mathf.RoundToInt(VARIABLE.Gold_Base * (1 + VARIABLE.Gold_Increase * StageManager.I.currentStage));
-            stone = Mathf.RoundToInt(VARIABLE.Stone_Base * (1 + VARIABLE.Stone_Increase * StageManager.I.currentStage));
+            gold = Mathf.RoundToInt(VARIABLE.Gold_Base * (1 + VARIABLE.Gold_Increase * StageManager.I.GetCurrnetStage()));
+            stone = Mathf.RoundToInt(VARIABLE.Stone_Base * (1 + VARIABLE.Stone_Increase * StageManager.I.GetCurrnetStage()));
         }
         
         // player의 PlayerManager의 gold와 stone값을 증가시킨다.
@@ -50,10 +52,15 @@ public class Enemy : MonoBehaviour
         GoodsManager.I.IncreaseStone(new Unified(stone));
         
         SpawnManager.I.RemoveEnemy(transform.parent.gameObject);
-
+        
         if (isBoss == true)
         {
-            SpawnManager.I.bossSpawned = false;
+            SpawnManager.I.DieBoss();
+            StageManager.I.DieBoss();
+        }
+        else
+        {
+            StageManager.I.IncreaseCount(5);
         }
         
         Destroy(transform.parent.gameObject);
