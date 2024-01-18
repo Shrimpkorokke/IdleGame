@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Unified hp = new Unified(500);
-
+    [SerializeField] private bool isBoss;
     public void GetDamage(AttackInfo attackInfo)
     {
         Unified damage = new Unified(attackInfo.attPower);
@@ -36,9 +36,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Destroy(transform.parent.gameObject);
-        SpawnManager.I.DecreaseCount();
-
         BigInteger gold = 0;
         BigInteger stone = 0;
         // 테이블을 참조하여 현재 스테이지에 해당하는 골드와, 스톤 값을 가지고 온다.
@@ -51,6 +48,14 @@ public class Enemy : MonoBehaviour
         // player의 PlayerManager의 gold와 stone값을 증가시킨다.
         GoodsManager.I.IncreaseGold(new Unified(gold));
         GoodsManager.I.IncreaseStone(new Unified(stone));
+        
+        SpawnManager.I.RemoveEnemy(transform.parent.gameObject);
 
+        if (isBoss == true)
+        {
+            SpawnManager.I.bossSpawned = false;
+        }
+        
+        Destroy(transform.parent.gameObject);
     }
 }
