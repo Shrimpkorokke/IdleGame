@@ -38,8 +38,8 @@ public class Enemy : MonoBehaviour
         Destroy(transform.parent.gameObject);
         SpawnManager.I.DecreaseCount();
 
-        int gold = 0;
-        int stone = 0;
+        BigInteger gold = 0;
+        BigInteger stone = 0;
         // 테이블을 참조하여 현재 스테이지에 해당하는 골드와, 스톤 값을 가지고 온다.
         foreach (var VARIABLE in DefaultTable.StageMonster.GetList())
         {

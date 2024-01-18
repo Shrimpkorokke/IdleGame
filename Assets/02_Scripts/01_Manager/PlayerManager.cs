@@ -95,7 +95,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         
         if (skillLevelDic[tid] >= training.MaxLevel)
             return;
-
+        
         skillLevelDic[tid]++;
         
         // UI 관련

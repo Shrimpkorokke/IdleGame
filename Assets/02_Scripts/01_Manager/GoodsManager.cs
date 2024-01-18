@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 public class GoodsManager : MonoSingleton<GoodsManager>
 {
     [SerializeField] private Text txtGold;
     [SerializeField] private Text TxtStone;
-    [SerializeField] private int gold;
-    [SerializeField] private int stone;
+    [SerializeField] private BigInteger gold;
+    [SerializeField] private BigInteger stone;
 
     protected override void Awake()
     {
@@ -15,25 +16,25 @@ public class GoodsManager : MonoSingleton<GoodsManager>
         SetStoneText();
     }
 
-    public void IncreaseGold(int gold)
+    public void IncreaseGold(BigInteger gold)
     {
         this.gold += gold;
         SetGoldText();
     }
 
-    public void DecreaseGold(int gold)
+    public void DecreaseGold(BigInteger gold)
     {
         this.gold -= gold;
         SetGoldText();
     }
     
-    public void IncreaseStone(int stone)
+    public void IncreaseStone(BigInteger stone)
     {
         this.stone += stone;
         SetStoneText();
     }
 
-    public void DecreaseStone(int stone)
+    public void DecreaseStone(BigInteger stone)
     {
         this.stone -= stone;
         SetStoneText();
@@ -41,11 +42,11 @@ public class GoodsManager : MonoSingleton<GoodsManager>
 
     public void SetGoldText()
     {
-        txtGold.text = gold.ToString();
+        txtGold.text = gold.BigintToString();
     }
 
     public void SetStoneText()
     {
-        TxtStone.text = stone.ToString();
+        TxtStone.text = stone.BigintToString();
     }
 }
