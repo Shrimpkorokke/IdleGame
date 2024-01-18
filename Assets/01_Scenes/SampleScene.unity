@@ -228,6 +228,7 @@ MonoBehaviour:
   player: {fileID: 331267215}
   isReady: 0
   isAttack: 0
+  isTest: 0
   attPowerLv: 0
   attSpeedLv: 0
   criRateLv: 0
@@ -266,8 +267,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtGold: {fileID: 1516519584}
   TxtStone: {fileID: 1422338906}
-  gold: 0
-  stone: 0
 --- !u!1 &68707771
 GameObject:
   m_ObjectHideFlags: 0

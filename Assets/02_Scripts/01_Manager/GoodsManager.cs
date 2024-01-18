@@ -7,8 +7,8 @@ public class GoodsManager : MonoSingleton<GoodsManager>
 {
     [SerializeField] private Text txtGold;
     [SerializeField] private Text TxtStone;
-    [SerializeField] private BigInteger gold;
-    [SerializeField] private BigInteger stone;
+    [SerializeField] private Unified gold = new();
+    [SerializeField] private Unified stone = new();
 
     protected override void Awake()
     {
@@ -16,25 +16,30 @@ public class GoodsManager : MonoSingleton<GoodsManager>
         SetStoneText();
     }
 
-    public void IncreaseGold(BigInteger gold)
+    public Unified GetGold()
+    {
+        return gold;
+    }
+    
+    public void IncreaseGold(Unified gold)
     {
         this.gold += gold;
         SetGoldText();
     }
 
-    public void DecreaseGold(BigInteger gold)
+    public void DecreaseGold(Unified gold)
     {
         this.gold -= gold;
         SetGoldText();
     }
     
-    public void IncreaseStone(BigInteger stone)
+    public void IncreaseStone(Unified stone)
     {
         this.stone += stone;
         SetStoneText();
     }
 
-    public void DecreaseStone(BigInteger stone)
+    public void DecreaseStone(Unified stone)
     {
         this.stone -= stone;
         SetStoneText();
@@ -42,11 +47,11 @@ public class GoodsManager : MonoSingleton<GoodsManager>
 
     public void SetGoldText()
     {
-        txtGold.text = gold.BigintToString();
+        txtGold.text = gold.IntPart.BigintToString();
     }
 
     public void SetStoneText()
     {
-        TxtStone.text = stone.BigintToString();
+        TxtStone.text = stone.IntPart.BigintToString();
     }
 }

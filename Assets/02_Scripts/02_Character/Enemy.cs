@@ -5,29 +5,30 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float hp = 500;
+    [SerializeField] private Unified hp = new Unified(500);
 
     public void GetDamage(AttackInfo attackInfo)
     {
-        float damage = attackInfo.attPower;
+        Unified damage = new Unified(attackInfo.attPower);
         float criRate = attackInfo.criRate * 1000;
-  
+        Unified criDamageRate = new Unified(attackInfo.criDamageRate);
+        Unified finalDamageRate = new Unified(attackInfo.finalDamageRate);
+            
         // 크리티컬 확률 계산
         if (Random.Range(0, 1000) <= criRate)
         {
             // 크리티컬 발동시 데미지 증가
-            damage = damage + damage * attackInfo.criDamageRate;
+            damage = damage + damage * criDamageRate;
         }
         
         // 최종 데미지 증가
-        damage = damage + damage * attackInfo.finalDamageRate;
-        //Debug.Log($"최종 데미지 증가: {attackInfo.finalDamageRate}");
-        FloatingTextController.I.CreateFloatingText(damage.ToString(), transform);
+        damage = damage + damage * finalDamageRate;
+        FloatingTextController.I.CreateFloatingText(damage.IntPart.BigintToString(), transform);
         
         // 체력 감소
         hp -= damage;
 
-        if (hp <= 0)
+        if (hp.IntPart <= 0)
         {
             Die();
         }
@@ -48,8 +49,8 @@ public class Enemy : MonoBehaviour
         }
         
         // player의 PlayerManager의 gold와 stone값을 증가시킨다.
-        GoodsManager.I.IncreaseGold(gold);
-        GoodsManager.I.IncreaseStone(stone);
+        GoodsManager.I.IncreaseGold(new Unified(gold));
+        GoodsManager.I.IncreaseStone(new Unified(stone));
 
     }
 }

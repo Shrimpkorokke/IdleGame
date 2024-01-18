@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.Numerics;
 using UnityEngine.Serialization;
 using UniRx;
 
@@ -49,9 +50,17 @@ public class GrowthButton : MonoBehaviour
         coverUnlock.SetActive(false);
     }
 
-    public void SetGoldTxt()
+    public Unified GetRequiredGold()
     {
         var training = DefaultTable.Training.GetList().Find(x => x.TID == TID);
-        txtGold.text = (training.LevelUpGold + ((1 + training.LevelUpGoldIncrease) * training.LevelUpGold * PlayerManager.I.skillLevelDic[TID])).ToString();
+        BigInteger requiredGold = (BigInteger)(training.LevelUpGold + ((1 + training.LevelUpGoldIncrease) * training.LevelUpGold *
+                                                            PlayerManager.I.skillLevelDic[TID]));
+
+        return new Unified(requiredGold);
+    }
+    
+    public void SetGoldTxt()
+    {
+        txtGold.text = GetRequiredGold().IntPart.BigintToString();
     }
 }

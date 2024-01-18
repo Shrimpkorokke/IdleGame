@@ -4,10 +4,10 @@ using UnityEngine;
 
 public static class StringExtension
 {
-    public static string BigintToString(this BigInteger gold)
+    public static string BigintToString(this BigInteger bigInt)
     {
         int placeN = 3;
-        BigInteger value = gold;
+        BigInteger value = bigInt;
         List<int> numList = new();
         int p = (int)Mathf.Pow(10, placeN);
 
@@ -35,3 +35,4 @@ public static class StringExtension
         return retStr;
     }
 }
+    

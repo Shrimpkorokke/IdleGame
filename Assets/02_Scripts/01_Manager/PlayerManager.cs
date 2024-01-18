@@ -9,7 +9,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public Player player;
     public bool isReady;
     public bool isAttack;
-
+    public bool isTest;
+    
     #region Training_Normal_Level
     public int attPowerLv;
     public int attSpeedLv;
@@ -93,8 +94,18 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         if (skillLevelDic.ContainsKey(tid) == false)
             return;
         
+        // MaxLevel 일 때
         if (skillLevelDic[tid] >= training.MaxLevel)
             return;
+
+        if (isTest == false)
+        {
+            // 돈이 부족할 때 
+            if (GoodsManager.I.GetGold().CompareTo(growthButton.GetRequiredGold()) <= 0)
+                return;
+        
+            GoodsManager.I.DecreaseGold(growthButton.GetRequiredGold()); 
+        }
         
         skillLevelDic[tid]++;
         
@@ -107,7 +118,9 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         {
             growthButton.txtLevel.text = $"Lv.Max";
         }
+        
         growthButton.SetGoldTxt();
+        
         if (training.TrainingType == TrainingType.AttSpeed)
         {
             player.SetAttackSpeed();
