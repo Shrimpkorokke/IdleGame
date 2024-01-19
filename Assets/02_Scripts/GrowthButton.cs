@@ -53,9 +53,7 @@ public class GrowthButton : MonoBehaviour
     public Unified GetRequiredGold()
     {
         var training = DefaultTable.Training.GetList().Find(x => x.TID == TID);
-        BigInteger requiredGold = (BigInteger)(training.LevelUpGold + ((1 + training.LevelUpGoldIncrease) * training.LevelUpGold *
-                                                            PlayerManager.I.skillLevelDic[TID]));
-
+        BigInteger requiredGold = (BigInteger)(Mathf.RoundToInt(training.LevelUpGold * Mathf.Pow(PlayerManager.I.skillLevelDic[TID] + 1, training.LevelUpGoldIncrease)));
         return new Unified(requiredGold);
     }
     

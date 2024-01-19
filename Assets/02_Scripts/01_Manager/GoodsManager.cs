@@ -24,12 +24,14 @@ public class GoodsManager : MonoSingleton<GoodsManager>
     public void IncreaseGold(Unified gold)
     {
         this.gold += gold;
+        Debug.Log($"gold: {this.gold}");
         SetGoldText();
     }
 
     public void DecreaseGold(Unified gold)
     {
         this.gold -= gold;
+        Debug.Log($"gold: {this.gold}");
         SetGoldText();
     }
     

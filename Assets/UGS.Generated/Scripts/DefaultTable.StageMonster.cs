@@ -62,6 +62,9 @@ namespace DefaultTable
 		public System.Single Gold_Increase;
 		public System.Int32 Stone_Base;
 		public System.Single Stone_Increase;
+		public System.Int32 HP_Base;
+		public System.Single HP_Increase;
+		public System.Single BossHP_Increase;
   
 
 #region fuctions
