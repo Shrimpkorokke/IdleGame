@@ -17,53 +17,49 @@ using UnityEngine;
 namespace DefaultTable
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class StageMonster : ITable
+    public partial class Level : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<StageMonster> loadedList, Dictionary<int, StageMonster> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<Level> loadedList, Dictionary<int, Level> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "1FIWfXsYk2z0BQKoW8tzYQOivhN4x56AbB1AQ_aaEPAw"; // it is file id
-        static string sheetID = "357051608"; // it is sheet id
+        static string sheetID = "578403991"; // it is sheet id
         static UnityFileReader reader = new UnityFileReader();
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, StageMonster> StageMonsterMap = new Dictionary<int, StageMonster>();  
-        public static List<StageMonster> StageMonsterList = new List<StageMonster>();   
+        public static Dictionary<int, Level> LevelMap = new Dictionary<int, Level>();  
+        public static List<Level> LevelList = new List<Level>();   
 
         /// <summary>
-        /// Get StageMonster List 
+        /// Get Level List 
         /// Auto Load
         /// </summary>
-        public static List<StageMonster> GetList()
+        public static List<Level> GetList()
         {{
            if (isLoaded == false) Load();
-           return StageMonsterList;
+           return LevelList;
         }}
 
         /// <summary>
-        /// Get StageMonster Dictionary, keyType is your sheet A1 field type.
+        /// Get Level Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, StageMonster>  GetDictionary()
+        public static Dictionary<int, Level>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return StageMonsterMap;
+           return LevelMap;
         }}
 
     
 
 /* Fields. */
 
-		public System.Int32 Exp_Base;
-		public System.Int32 Gold_Base;
-		public System.Single Gold_Increase;
-		public System.Int32 Stone_Base;
-		public System.Single Stone_Increase;
-		public System.Int32 HP_Base;
-		public System.Single HP_Increase;
-		public System.Single HPBoss_Increase;
+		public System.Int32 Exp_Need;
+		public System.Single Exp_Increase;
+		public TrainingType TrainingType;
+		public System.Single AdditionalVal;
   
 
 #region fuctions
@@ -74,7 +70,7 @@ namespace DefaultTable
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("StageMonster is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("Level is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -90,7 +86,7 @@ namespace DefaultTable
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<StageMonster>, Dictionary<int, StageMonster>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<Level>, Dictionary<int, Level>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -118,14 +114,14 @@ namespace DefaultTable
                
 
 
-    public static (List<StageMonster> list, Dictionary<int, StageMonster> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, StageMonster> Map = new Dictionary<int, StageMonster>();
-            List<StageMonster> List = new List<StageMonster>();     
+    public static (List<Level> list, Dictionary<int, Level> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, Level> Map = new Dictionary<int, Level>();
+            List<Level> List = new List<Level>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(StageMonster).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(Level).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["StageMonster"];
+            var sheet = jsonObject["Level"];
 
             foreach (var column in sheet.Keys)
             {
@@ -144,7 +140,7 @@ namespace DefaultTable
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            StageMonster instance = new StageMonster();
+                            Level instance = new Level();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -181,12 +177,12 @@ namespace DefaultTable
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.Exp_Base, instance);
+                            Map.Add(instance.Exp_Need, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            StageMonsterList = List;
-                            StageMonsterMap = Map;
+                            LevelList = List;
+                            LevelMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -196,10 +192,10 @@ namespace DefaultTable
 
  
 
-        public static void Write(StageMonster data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(Level data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(StageMonster).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(Level).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {

@@ -10,6 +10,12 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public bool isReady;
     public bool isAttack;
     public bool isTest;
+
+    #region Level
+    [SerializeField] private int level = 1;
+    public int currentExp;
+    public int needExp;
+    #endregion
     
     #region Training_Normal_Level
     public int attPowerLv;
@@ -51,9 +57,17 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             skillLevelDic[VARIABLE.TID] = 0;
         }
         
+        // 필요 경험치 설정
+        foreach (var VARIABLE in DefaultTable.Level.GetList())
+        {
+            needExp = level * VARIABLE.Exp_Need;
+        }
+        
         player.SetAttackSpeed();
         
         StartCoroutine(WaitforReady());
+        
+        
     }
 
     private void Update()
@@ -125,5 +139,26 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         {
             player.SetAttackSpeed();
         }
+    }
+
+    public void IncreaseExp(int exp)
+    {
+        currentExp += exp;
+        Debug.Log($"Exp: level: {level}, currentExp: {currentExp}, needExp: {needExp}");
+        if (currentExp >= needExp)
+        {
+            IncreaseLevelUp();
+        }
+    }
+
+    public void IncreaseLevelUp()
+    {
+        currentExp = 0;
+        level++;
+        foreach (var VARIABLE in DefaultTable.Level.GetList())
+        {
+            needExp = level * VARIABLE.Exp_Need;
+        }
+        Debug.Log($"Levelup: level{level} currentExp: {currentExp}, needExp: {needExp}");
     }
 }

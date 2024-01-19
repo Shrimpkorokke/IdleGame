@@ -15,10 +15,10 @@ public class Enemy : MonoBehaviour
         foreach (var stageMonster in DefaultTable.StageMonster.GetList())
         {
             BigInteger temp = (BigInteger)(stageMonster.HP_Base *
-                                         Mathf.Pow(StageManager.I.GetCurrnetStage(), isBoss ? stageMonster.BossHP_Increase : stageMonster.HP_Increase));
+                                         Mathf.Pow(StageManager.I.GetCurrnetStage(), isBoss ? stageMonster.HPBoss_Increase : stageMonster.HP_Increase));
             
             hp = new Unified(temp);
-            Debug.Log($"hp: {hp} HP_Increase: {stageMonster.HP_Increase}");
+            //Debug.Log($"hp: {hp} HP_Increase: {stageMonster.HP_Increase}");
         }
     }
 
@@ -55,6 +55,7 @@ public class Enemy : MonoBehaviour
     {
         BigInteger gold = 0;
         BigInteger stone = 0;
+        int exp = 0;
         // 테이블을 참조하여 현재 스테이지에 해당하는 골드와, 스톤 값을 가지고 온다.
         foreach (var stageMonster in DefaultTable.StageMonster.GetList())
         {
@@ -62,15 +63,19 @@ public class Enemy : MonoBehaviour
                                 Mathf.Pow(StageManager.I.GetCurrnetStage(), stageMonster.Gold_Increase));
             stone = (BigInteger)(stageMonster.Stone_Base *
                                  Mathf.Pow(StageManager.I.GetCurrnetStage(), stageMonster.Stone_Increase));
-
+            exp = stageMonster.Exp_Base;
             if (isBoss)
             {
                 gold *= 2;
                 stone *= 2;
+                exp *= 2;
             }
             
             Debug.Log($"gold: {gold}. stone: {stone} \n stageMonster.Gold_Increase {stageMonster.Gold_Increase}, stageMonster.Stone_Increase: {stageMonster.Stone_Increase}");
         }
+        
+        // player의 exp를 증가시킨다.
+        PlayerManager.I.IncreaseExp(exp);
         
         // player의 PlayerManager의 gold와 stone값을 증가시킨다.
         GoodsManager.I.IncreaseGold(new Unified(gold));
