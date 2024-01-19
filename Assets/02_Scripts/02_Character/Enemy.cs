@@ -24,7 +24,6 @@ public class Enemy : MonoBehaviour
 
     public void GetDamage(AttackInfo attackInfo)
     {
-        Debug.Log($"attPower: {attackInfo.attPower}");
         Unified damage = new Unified(attackInfo.attPower);
         float criRate = attackInfo.criRate * 1000;
         Unified criDamageRate = new Unified(attackInfo.criDamageRate);
@@ -63,6 +62,13 @@ public class Enemy : MonoBehaviour
                                 Mathf.Pow(StageManager.I.GetCurrnetStage(), stageMonster.Gold_Increase));
             stone = (BigInteger)(stageMonster.Stone_Base *
                                  Mathf.Pow(StageManager.I.GetCurrnetStage(), stageMonster.Stone_Increase));
+
+            if (isBoss)
+            {
+                gold *= 2;
+                stone *= 2;
+            }
+            
             Debug.Log($"gold: {gold}. stone: {stone} \n stageMonster.Gold_Increase {stageMonster.Gold_Increase}, stageMonster.Stone_Increase: {stageMonster.Stone_Increase}");
         }
         
