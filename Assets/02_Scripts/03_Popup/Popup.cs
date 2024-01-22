@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Popup : MonoBehaviour
 {
+    public enum PopupType
+    {
+        Main, Setting
+    }
+
+    public PopupType popupType;
     protected virtual void Awake()
     {
         // 팝업 생성 시 PopupManager에 자신을 등록

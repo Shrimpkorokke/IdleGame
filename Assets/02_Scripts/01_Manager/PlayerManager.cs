@@ -15,6 +15,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     [SerializeField] private int level = 1;
     public int currentExp;
     public int needExp;
+    public int abilityPoint;
     #endregion
     
     #region Training_Normal_Level
@@ -155,6 +156,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     {
         currentExp = 0;
         level++;
+        abilityPoint++;
+        
         foreach (var VARIABLE in DefaultTable.Level.GetList())
         {
             needExp = level * VARIABLE.Exp_Need;
