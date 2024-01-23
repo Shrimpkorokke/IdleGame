@@ -16,7 +16,7 @@ public class Menu : MonoBehaviour
         btnShop.onClick.AddListener(() =>
         {
             if (PopupManager.I.IsPopupOpen<PopupShop>())
-                PopupManager.I.GetPopup<PopupShop>().Close();
+                return;
             else
                 PopupManager.I.GetPopup<PopupShop>().Open();
         });
@@ -24,7 +24,7 @@ public class Menu : MonoBehaviour
         btnGrowth.onClick.AddListener(() =>
         {
             if (PopupManager.I.IsPopupOpen<PopupGrowth>())
-                PopupManager.I.GetPopup<PopupGrowth>().Close();
+                return;
             else
                 PopupManager.I.GetPopup<PopupGrowth>().Open();
         });
@@ -32,7 +32,7 @@ public class Menu : MonoBehaviour
         btnEquipment.onClick.AddListener(() =>
         {
             if (PopupManager.I.IsPopupOpen<PopupEquipment>())
-                PopupManager.I.GetPopup<PopupEquipment>().Close();
+                return;
             else
                 PopupManager.I.GetPopup<PopupEquipment>().Open();
         });
@@ -40,7 +40,7 @@ public class Menu : MonoBehaviour
         btnDungeon.onClick.AddListener(() =>
         {
             if (PopupManager.I.IsPopupOpen<PopupDungeon>())
-                PopupManager.I.GetPopup<PopupDungeon>().Close();
+                return;
             else
                 PopupManager.I.GetPopup<PopupDungeon>().Open();
         });
