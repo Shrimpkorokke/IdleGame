@@ -12,7 +12,9 @@ public class PopupSetting : Popup
     // 슬라이더
     [SerializeField, GetComponentInChildrenName("Slider_BGM")] private Slider sliderBgm;
     [SerializeField, GetComponentInChildrenName("Slider_Sfx")] private Slider sliderSfx;
-    
+    [SerializeField, GetComponentInChildrenName("Slider_Shaking")] private Slider sliderShaking;
+    [SerializeField, GetComponentInChildrenName("Slider_PowerSaving")] private Slider SliderPowerSaving;
+
     // On,Off 버튼
     [SerializeField, GetComponentInChildrenName("Btn_Shaking")] private Button btnShaking;
     [SerializeField, GetComponentInChildrenName("Btn_PowerSaving")] private Button btnPowerSaving;
@@ -23,13 +25,26 @@ public class PopupSetting : Popup
     private float bgmValue;
     private float sfxValue;
 
-    private int shaking;
-    private int autoPowerSaving;
+    private float shaking;
+    private float autoPowerSaving;
     private int hasSet;
     protected override void Awake()
     {
         btnExit.onClick.AddListener(() => Close());
         btnBG.onClick.AddListener(() => Close());
+        btnShaking.onClick.AddListener(() =>
+        {
+            shaking = shaking < 1 ? 1 : 0;
+            sliderShaking.value = shaking;
+            Debug.Log("shaking 버튼 눌림");
+        });
+        
+        btnPowerSaving.onClick.AddListener(() =>
+        {
+            autoPowerSaving = autoPowerSaving < 1 ? 1 : 0;
+            SliderPowerSaving.value = autoPowerSaving;
+            Debug.Log("power 버튼 눌림");
+        });
     }
     
     private void LoadData()
@@ -38,8 +53,8 @@ public class PopupSetting : Popup
         if (PlayerPrefs.HasKey("hasSet") == false)
         {
             Debug.Log(" 값이 없음");
-            bgmValue = 0.5f;
-            sfxValue = 0.5f;
+            bgmValue = 1f;
+            sfxValue = 1f;
             shaking = 1;
             autoPowerSaving = 1;
             SaveData();
@@ -53,12 +68,14 @@ public class PopupSetting : Popup
             sfxValue = PlayerPrefs.GetFloat("sfxValue");
         
             // int(bool 대신) 화면 흔들림, 자동 절전모드
-            shaking = PlayerPrefs.GetInt("shaking");
-            autoPowerSaving = PlayerPrefs.GetInt("powerSaving");
+            shaking = PlayerPrefs.GetFloat("shaking");
+            autoPowerSaving = PlayerPrefs.GetFloat("powerSaving");
         }
         
         sliderBgm.value = bgmValue;
         sliderSfx.value = sfxValue;
+        sliderShaking.value = shaking;
+        SliderPowerSaving.value = autoPowerSaving;
     }
 
     private void SaveData()
