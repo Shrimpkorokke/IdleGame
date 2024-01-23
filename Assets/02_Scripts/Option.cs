@@ -13,8 +13,6 @@ public class Option : MonoBehaviour
     [SerializeField] private Button btnTitleExit;
     [SerializeField] private Button btnBG;
     [SerializeField] private GameObject option;
-    [SerializeField] private GameObject setting;
-    [SerializeField] private GameObject powerSaving;
     private void Awake()
     {
         DeletePLayerPrefs();
@@ -33,7 +31,6 @@ public class Option : MonoBehaviour
         btnPowerSaving.onClick.AddListener(() =>
         {
             option.SetActive(false);
-            powerSaving.SetActive(true);
         });
         
         btnTitleExit.onClick.AddListener(() => option.SetActive(false));

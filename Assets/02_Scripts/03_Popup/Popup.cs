@@ -6,7 +6,7 @@ public class Popup : MonoBehaviour
 {
     public enum PopupType
     {
-        Main, Setting
+        Main, Setting, Idle
     }
 
     public PopupType popupType;
