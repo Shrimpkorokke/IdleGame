@@ -14,5 +14,15 @@ public class PopupIdle : Popup
 
         // 시간:분 형식으로 포맷팅
         txtTime.text = now.ToString("HH:mm");
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                Close();
+            }
+        }
     }
 }

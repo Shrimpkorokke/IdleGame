@@ -18,17 +18,21 @@ public class TimeManager : MonoSingleton<TimeManager>
     void Update()
     {
         // 사용자 입력 감지
-        if (Input.anyKey || Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             lastInputTime = Time.time;
-            
+
             if (isIdle == true)
             {
-                isIdle = false;
                 // 프레임 레이트를 기본값으로 재설정
-                Application.targetFrameRate = -1;
-                PopupManager.I.GetPopup<PopupIdle>().Close();
-                
+                Touch touch = Input.GetTouch(0);
+
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    //PopupManager.I.GetPopup<PopupIdle>().Close();
+                    isIdle = false;
+                    Application.targetFrameRate = -1;
+                }
             }
         }
 
@@ -38,7 +42,7 @@ public class TimeManager : MonoSingleton<TimeManager>
             if (isIdle == false)
             {
                 isIdle = true;
-                PopupManager.I.GetPopup<PopupIdle>().Open();
+                //PopupManager.I.GetPopup<PopupIdle>().Open();
                 Application.targetFrameRate = reducedFrameRate;
             }
         }

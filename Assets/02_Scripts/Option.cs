@@ -30,6 +30,11 @@ public class Option : MonoBehaviour
         
         btnPowerSaving.onClick.AddListener(() =>
         {
+            if (PopupManager.I.IsPopupOpen<PopupIdle>())
+                PopupManager.I.GetPopup<PopupIdle>().Close();
+            else
+                PopupManager.I.GetPopup<PopupIdle>().Open();
+            
             option.SetActive(false);
         });
         
