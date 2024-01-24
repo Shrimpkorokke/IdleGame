@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class FloatingText : MonoBehaviour
 {
     [SerializeField, GetComponentInChildren] private Animator animator;
-    [SerializeField, GetComponentInChildren] private Text textDamage;
+    [SerializeField, GetComponentInChildren] private TextMesh textDamage;
     private void Start()
     {
         AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);

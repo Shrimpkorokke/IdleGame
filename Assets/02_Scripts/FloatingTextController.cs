@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class FloatingTextController : MonoSingleton<FloatingTextController>
@@ -23,11 +24,11 @@ public class FloatingTextController : MonoSingleton<FloatingTextController>
     
     public void CreateFloatingText(string text, Transform location)
     {
-        FloatingText instance = Instantiate(floatingText);
-        Vector2 screenPosition = Camera.main.WorldToScreenPoint(location.position);
+        FloatingText instance = Instantiate(floatingText, location.position, quaternion.identity);
+        //Vector2 screenPosition = Camera.main.WorldToScreenPoint(location.position);
         
-        instance.transform.SetParent(canvas.transform, false);
-        instance.transform.position = screenPosition;
+        //instance.transform.SetParent(canvas.transform, false);
+        //instance.transform.position = screenPosition;
         instance.SetText(text);
     }
 }

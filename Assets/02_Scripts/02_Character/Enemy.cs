@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     private Unified hp = new Unified(500);
     [SerializeField] private bool isBoss;
 
+    [SerializeField, GetComponentInChildrenName("Pos_DamageText")] private Transform posDamageText;
     public void Start()
     {
         foreach (var stageMonster in DefaultTable.StageMonster.GetList())
@@ -38,7 +39,7 @@ public class Enemy : MonoBehaviour
         
         // 최종 데미지 증가
         damage = damage + damage * finalDamageRate;
-        FloatingTextController.I.CreateFloatingText(damage.IntPart.BigintToString(), transform);
+        FloatingTextController.I.CreateFloatingText(damage.IntPart.BigintToString(), posDamageText);
         
         // 체력 감소
         hp -= damage;

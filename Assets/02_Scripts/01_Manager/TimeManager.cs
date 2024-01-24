@@ -29,7 +29,7 @@ public class TimeManager : MonoSingleton<TimeManager>
 
                 if (touch.phase == TouchPhase.Moved)
                 {
-                    //PopupManager.I.GetPopup<PopupIdle>().Close();
+                    PopupManager.I.GetPopup<PopupIdle>().Close();
                     isIdle = false;
                     Application.targetFrameRate = -1;
                 }
@@ -42,7 +42,7 @@ public class TimeManager : MonoSingleton<TimeManager>
             if (isIdle == false)
             {
                 isIdle = true;
-                //PopupManager.I.GetPopup<PopupIdle>().Open();
+                PopupManager.I.GetPopup<PopupIdle>().Open();
                 Application.targetFrameRate = reducedFrameRate;
             }
         }
