@@ -9,7 +9,8 @@ public class Enemy : MonoBehaviour
 {
     private Unified hp = new Unified(500);
     [SerializeField] private bool isBoss;
-
+    private int excutionCount;
+    
     [SerializeField, GetComponentInChildrenName("Pos_DamageText")] private Transform posDamageText;
     public void Start()
     {
@@ -25,11 +26,11 @@ public class Enemy : MonoBehaviour
 
     public void GetDamage(AttackInfo attackInfo)
     {
+        excutionCount++;
         Unified damage = new Unified(attackInfo.attPower);
         float criRate = attackInfo.criRate * 1000;
         Unified criDamageRate = new Unified(attackInfo.criDamageRate);
         Unified finalDamageRate = new Unified(attackInfo.finalDamageRate);
-            
         // 크리티컬 확률 계산
         if (Random.Range(0, 1000) <= criRate)
         {
@@ -37,8 +38,42 @@ public class Enemy : MonoBehaviour
             damage = damage + damage * criDamageRate;
         }
         
-        // 최종 데미지 증가
+        // 일반몹 추댐
+        if (attackInfo.normalAddDmg && !isBoss)
+        {
+            damage += damage * new Unified(1.1f);
+        }
+        // 보스몹 추댐
+        if (attackInfo.bossAddDmg && isBoss)
+        {
+            damage += damage * new Unified(1.1f);
+        }
+        
+        // 5번째 공격일 때
+        if (attackInfo.fiveAttack)
+        {
+            damage *= new Unified(2f);
+        }
+        
+        // 최종 대미지 증가
         damage = damage + damage * finalDamageRate;
+        
+        // 처형 
+        if (attackInfo.excution && !isBoss)
+        {
+            if (excutionCount >= 10)
+            {
+                if (Random.Range(0, 100) <= 5)
+                {
+                    damage += hp;
+                }
+            }
+            else
+            {
+                excutionCount++;
+            }
+        }
+        
         FloatingTextController.I.CreateFloatingText(damage.IntPart.BigintToString(), posDamageText);
         
         // 체력 감소

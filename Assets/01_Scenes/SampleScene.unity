@@ -429,7 +429,7 @@ MonoBehaviour:
   player: {fileID: 331267215}
   isReady: 0
   isAttack: 0
-  isTest: 0
+  isTest: 1
   level: 1
   currentExp: 0
   needExp: 0
@@ -445,6 +445,7 @@ MonoBehaviour:
   criDamageSuperLv: 0
   dmgPowerSuperLv: 0
   rayLength: 0.9
+  txtLevel: {fileID: 1423497391}
 --- !u!114 &23520705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,7 +568,7 @@ MonoBehaviour:
   txtPoint: {fileID: 1781530736}
   growthType: 1
   abilityType: 1
-  TID: 120000
+  TID: 130000
 --- !u!114 &25505945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1225,7 +1226,7 @@ MonoBehaviour:
   txtPoint: {fileID: 1038463261}
   growthType: 1
   abilityType: 2
-  TID: 130000
+  TID: 140000
 --- !u!114 &93199713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1769,7 +1770,7 @@ MonoBehaviour:
   txtPoint: {fileID: 260195913}
   growthType: 1
   abilityType: 3
-  TID: 150000
+  TID: 110000
 --- !u!114 &127803583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9850,7 +9851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &775687931
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10959,7 +10960,7 @@ MonoBehaviour:
   txtPoint: {fileID: 1364230293}
   growthType: 1
   abilityType: 0
-  TID: 110000
+  TID: 120000
 --- !u!114 &875950956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15797,8 +15798,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC0C8\uB85C\uC6B4 \uC801\uC744 \uACF5\uACA9 \uC2DC, \uCD5C\uB300\uCCB4\uB825\uC758
-    10% \uCD94\uAC00 \uD53C\uD574"
+  m_Text: "5\uBC88 \uC9F8 \uACF5\uACA9\uB9C8\uB2E4 100% \uCD94\uAC00 \uD53C\uD574"
 --- !u!222 &1259034426
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17159,7 +17159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1361295219
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20389,7 +20389,7 @@ MonoBehaviour:
   txtPoint: {fileID: 2143107107}
   growthType: 1
   abilityType: 0
-  TID: 140000
+  TID: 150000
 --- !u!114 &1653182667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25316,11 +25316,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 127803581}
   - {fileID: 875950954}
   - {fileID: 25505943}
   - {fileID: 93199711}
   - {fileID: 1653182665}
-  - {fileID: 127803581}
   - {fileID: 1469950809}
   - {fileID: 2118724702}
   m_Father: {fileID: 743805953}

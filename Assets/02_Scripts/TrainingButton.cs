@@ -57,8 +57,8 @@ public class TrainingButton : MonoBehaviour
         return new Unified(requiredGold);
     }
     
-    public void SetGoldTxt()
-    {
-        txtGold.text = GetRequiredGold().IntPart.BigintToString();
+    public void SetGoldTxt(bool isMaxLevel = false)
+    { 
+        txtGold.text = isMaxLevel ? "Max" : GetRequiredGold().IntPart.BigintToString();
     }
 }

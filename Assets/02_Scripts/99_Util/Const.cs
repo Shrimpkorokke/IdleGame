@@ -12,4 +12,8 @@ public class Const
     public const string TRAINING = "훈련";
     public const string ABILITY = "특성";
 
+    public const int FIVE_ATTACK = 110000;
+    public const int NORMAL_ADD_DMG = 130000;
+    public const int BOSS_ADD_DMG = 140000;
+    public const int EXECUTION = 160000;
 }

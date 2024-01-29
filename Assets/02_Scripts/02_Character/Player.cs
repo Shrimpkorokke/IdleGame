@@ -70,9 +70,13 @@ public class Player : MonoBehaviour
     
     public float GetGrowthAttPower()
     {
-        var attPowerList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.AttPower).OrderBy(x => x.IsRate);
+        var attPowerTrainingList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.AttPower);
+        var attPowerAbilityList = DefaultTable.Ability.GetList().FindAll(x => x.AbilityType == AbilityType.AttPower);
+        
         float finalPower = basePower;
-        foreach (var VARIABLE in attPowerList)
+        float rate = 0;
+        
+        foreach (var VARIABLE in attPowerTrainingList)
         {
             // Rate가 아닐 때
             if (VARIABLE.IsRate == 0)
@@ -82,11 +86,25 @@ public class Player : MonoBehaviour
             // Rate일 때
             else
             {
-                finalPower += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
+                rate += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
+            }
+        }
+
+        foreach (var VARIABLE in attPowerAbilityList)
+        {
+            // Rate가 아닐 때
+            if (VARIABLE.IsRate == 0)
+            {
+                finalPower += VARIABLE.AdditionalVal * PlayerManager.I.abilitySkillLevelDic[VARIABLE.TID];
+            }
+            // Rate일 때
+            else
+            {
+                rate += VARIABLE.AdditionalVal * PlayerManager.I.abilitySkillLevelDic[VARIABLE.TID];
             }
         }
         
-        return finalPower;
+        return finalPower + finalPower * rate;
     }
     
     public float GetGrowthCriRate()
@@ -113,11 +131,17 @@ public class Player : MonoBehaviour
     
     public float GetGrowthFinalDamageRate()
     {
-        var finalDmgRateList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.FinalDamageRate);
+        var finalDmgRateTrainingList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.FinalDamageRate);
+        var finalDmgRateAbilityList = DefaultTable.Ability.GetList().FindAll(x => x.AbilityType == AbilityType.FinalDamageRate);
         float additionalVal = 0;
-        foreach (var VARIABLE in finalDmgRateList)
+        foreach (var VARIABLE in finalDmgRateTrainingList)
         {
             additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
+        }
+
+        foreach (var VARIABLE in finalDmgRateAbilityList)
+        {
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.abilitySkillLevelDic[VARIABLE.TID];
         }
         return baseFinalDamageRate + additionalVal;
     }

@@ -33,7 +33,7 @@ public enum AbilityType
     AttPower,
     NormalAddDmg,
     BossAddDmg,
-    NewAttack,
+    FiveAttack,
     Execution,
     FinalDamageRate
 }

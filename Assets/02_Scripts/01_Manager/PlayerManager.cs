@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UniRx;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
@@ -45,6 +46,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public ReactiveDictionary<int, int> trainingSkillLevelDic = new();
     public ReactiveDictionary<int, int> abilitySkillLevelDic = new();
 
+    [SerializeField] private Text txtLevel;
     private void Awake()
     {
         if(player == null)
@@ -76,6 +78,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         {
             needExp = level * VARIABLE.Exp_Need;
         }
+
+        SetTextLevel();
         
         player.SetAttackSpeed();
         
@@ -139,13 +143,13 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         if (trainingSkillLevelDic[tid] < training.MaxLevel)
         {
             trainingButton.txtLevel.text = $"Lv.{trainingSkillLevelDic[tid]}";
+            trainingButton.SetGoldTxt(false);
         }
         else
         {
             trainingButton.txtLevel.text = $"Lv.Max";
+            trainingButton.SetGoldTxt(true);
         }
-        
-        trainingButton.SetGoldTxt();
         
         if (training.TrainingType == TrainingType.AttSpeed)
         {
@@ -181,13 +185,13 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         if (abilitySkillLevelDic[tid] < ability.MaxLevel)
         {
             abilityButton.txtLevel.text = $"Lv.{abilitySkillLevelDic[tid]}";
+            abilityButton.SetPointTxt(false);
         }
         else
         {
             abilityButton.txtLevel.text = $"Lv.Max";
+            abilityButton.SetPointTxt(true);
         }
-        
-        abilityButton.SetPointTxt();
     }
 
     public void IncreaseExp(int exp)
@@ -204,7 +208,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         currentExp = 0;
         level++;
         abilityPoint++;
-        
+        SetTextLevel();
         foreach (var VARIABLE in DefaultTable.Level.GetList())
         {
             needExp = level * VARIABLE.Exp_Need;
@@ -215,5 +219,10 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public void SetAbilityPoint()
     {
         
+    }
+
+    public void SetTextLevel()
+    {
+        txtLevel.text = $"Lv.{level.ToString()}";
     }
 }

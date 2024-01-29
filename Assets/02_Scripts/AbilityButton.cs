@@ -56,8 +56,8 @@ public class AbilityButton : MonoBehaviour
         return requiredPoint;
     }
     
-    public void SetPointTxt()
+    public void SetPointTxt(bool isMaxLevel = false)
     {
-        txtPoint.text = GetRequiredPoint().ToString();
+        txtPoint.text = isMaxLevel ? "Max" :GetRequiredPoint().ToString();
     }
 }
