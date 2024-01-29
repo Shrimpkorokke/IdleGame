@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UniRx;
+using UnityEngine.Serialization;
+
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
     public Player player;
@@ -40,7 +42,9 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     #endregion
     
     // tid, level
-    public ReactiveDictionary<int, int> skillLevelDic = new();
+    public ReactiveDictionary<int, int> trainingSkillLevelDic = new();
+    public ReactiveDictionary<int, int> abilitySkillLevelDic = new();
+
     private void Awake()
     {
         if(player == null)
@@ -52,11 +56,20 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         player.baseCriDmgRate = DefaultTable.PlayerStat.GetList()[0].criDamage;
         player.baseFinalDamageRate = DefaultTable.PlayerStat.GetList()[0].finalDamage;
         
+        // 훈련 레벨 딕셔너리
         foreach (var VARIABLE in DefaultTable.Training.GetList())
         {
             // 추후 저장된 값을 집어 넣기 
-            skillLevelDic[VARIABLE.TID] = 0;
+            trainingSkillLevelDic[VARIABLE.TID] = 0;
         }
+        
+        // 특성 레벨 딕셔너리
+        foreach (var VARIABLE in DefaultTable.Ability.GetList())
+        {
+            // 추후 저장된 값을 집어 넣기 
+            abilitySkillLevelDic[VARIABLE.TID] = 0;
+        }
+        
         
         // 필요 경험치 설정
         foreach (var VARIABLE in DefaultTable.Level.GetList())
@@ -67,8 +80,6 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         player.SetAttackSpeed();
         
         StartCoroutine(WaitforReady());
-        
-        
     }
 
     private void Update()
@@ -101,40 +112,40 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         Gizmos.DrawLine(player.transform.position, player.transform.position + Vector3.right * rayLength);
     }
 
-    public void IncreaseGrowth(GrowthButton growthButton)
+    public void IncreaseTraining(TrainingButton trainingButton)
     {
-        int tid = growthButton.TID;
+        int tid = trainingButton.TID;
         var training = DefaultTable.Training.GetList().Find(x => x.TID == tid);
         
-        if (skillLevelDic.ContainsKey(tid) == false)
+        if (trainingSkillLevelDic.ContainsKey(tid) == false)
             return;
         
         // MaxLevel 일 때
-        if (skillLevelDic[tid] >= training.MaxLevel)
+        if (trainingSkillLevelDic[tid] >= training.MaxLevel)
             return;
 
         if (isTest == false)
         {
             // 돈이 부족할 때 
-            if (GoodsManager.I.GetGold().CompareTo(growthButton.GetRequiredGold()) <= 0)
+            if (GoodsManager.I.GetGold().CompareTo(trainingButton.GetRequiredGold()) <= 0)
                 return;
         
-            GoodsManager.I.DecreaseGold(growthButton.GetRequiredGold()); 
+            GoodsManager.I.DecreaseGold(trainingButton.GetRequiredGold()); 
         }
         
-        skillLevelDic[tid]++;
+        trainingSkillLevelDic[tid]++;
         
         // UI 관련
-        if (skillLevelDic[tid] < training.MaxLevel)
+        if (trainingSkillLevelDic[tid] < training.MaxLevel)
         {
-            growthButton.txtLevel.text = $"Lv.{skillLevelDic[tid]}";
+            trainingButton.txtLevel.text = $"Lv.{trainingSkillLevelDic[tid]}";
         }
         else
         {
-            growthButton.txtLevel.text = $"Lv.Max";
+            trainingButton.txtLevel.text = $"Lv.Max";
         }
         
-        growthButton.SetGoldTxt();
+        trainingButton.SetGoldTxt();
         
         if (training.TrainingType == TrainingType.AttSpeed)
         {
@@ -142,10 +153,46 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         }
     }
 
+    public void IncreaseAbility(AbilityButton abilityButton)
+    {
+        int tid = abilityButton.TID;
+        var ability = DefaultTable.Ability.GetList().Find(x => x.TID == tid);
+        
+        if (abilitySkillLevelDic.ContainsKey(tid) == false)
+            return;
+        
+        // MaxLevel 일 때
+        if (abilitySkillLevelDic[tid] >= ability.MaxLevel)
+            return;
+
+        if (isTest == false)
+        {
+            // 포인트가 부족할 때
+            if (abilityPoint < abilityButton.GetRequiredPoint())
+                return;
+        
+            // 포인트 감소
+            abilityPoint--; 
+        }
+        
+        abilitySkillLevelDic[tid]++;
+        
+        // UI 관련
+        if (abilitySkillLevelDic[tid] < ability.MaxLevel)
+        {
+            abilityButton.txtLevel.text = $"Lv.{abilitySkillLevelDic[tid]}";
+        }
+        else
+        {
+            abilityButton.txtLevel.text = $"Lv.Max";
+        }
+        
+        abilityButton.SetPointTxt();
+    }
+
     public void IncreaseExp(int exp)
     {
         currentExp += exp;
-        Debug.Log($"Exp: level: {level}, currentExp: {currentExp}, needExp: {needExp}");
         if (currentExp >= needExp)
         {
             IncreaseLevelUp();
@@ -163,5 +210,10 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             needExp = level * VARIABLE.Exp_Need;
         }
         Debug.Log($"Levelup: level{level} currentExp: {currentExp}, needExp: {needExp}");
+    }
+
+    public void SetAbilityPoint()
+    {
+        
     }
 }

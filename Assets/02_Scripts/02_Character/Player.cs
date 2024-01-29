@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         float additionalVal = 0;
         foreach (var VARIABLE in attSpeedList)
         {
-            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
         }
         //print($"공격 속도: {baseSpeed * additionalVal}");
         return baseSpeed * 1 + additionalVal;
@@ -77,12 +77,12 @@ public class Player : MonoBehaviour
             // Rate가 아닐 때
             if (VARIABLE.IsRate == 0)
             {
-                finalPower += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+                finalPower += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
             }
             // Rate일 때
             else
             {
-                finalPower += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+                finalPower += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
             }
         }
         
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
         float additionalVal = 0;
         foreach (var VARIABLE in criRateList)
         {
-            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
         }
         return baseCriRate * 1 + additionalVal;
     }
@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
         float additionalVal = 0;
         foreach (var VARIABLE in criDmgRateList)
         {
-            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
         }
         return baseCriDmgRate * 1 + additionalVal;
     }
@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
         float additionalVal = 0;
         foreach (var VARIABLE in finalDmgRateList)
         {
-            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.skillLevelDic[VARIABLE.TID];
+            additionalVal += VARIABLE.AdditionalVal * PlayerManager.I.trainingSkillLevelDic[VARIABLE.TID];
         }
         return baseFinalDamageRate + additionalVal;
     }

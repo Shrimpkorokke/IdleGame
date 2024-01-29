@@ -7,7 +7,7 @@ using System.Numerics;
 using UnityEngine.Serialization;
 using UniRx;
 
-public class GrowthButton : MonoBehaviour
+public class TrainingButton : MonoBehaviour
 {
     [GetComponentInChildren] public ContinuousButton btn;
 
@@ -24,7 +24,7 @@ public class GrowthButton : MonoBehaviour
     {
         //btn.onClick.AddListener(()=>PlayerManager.I.IncreaseGrowth(this));
         if(btn != null)
-            btn.SetButtonAction(() => PlayerManager.I.IncreaseGrowth(this));
+            btn.SetButtonAction(() => PlayerManager.I.IncreaseTraining(this));
         SubscribeToDictionary();
         SetGoldTxt();
     }
@@ -34,7 +34,7 @@ public class GrowthButton : MonoBehaviour
         var training = DefaultTable.Training.GetList().Find(x => x.TID == TID);
         var unlockLevel = training.UnlockLevel;
         
-        PlayerManager.I.skillLevelDic.ObserveReplace()
+        PlayerManager.I.trainingSkillLevelDic.ObserveReplace()
             .Where(change => change.Key == training.UnlockTID)
             .Subscribe(change =>
             {
@@ -53,7 +53,7 @@ public class GrowthButton : MonoBehaviour
     public Unified GetRequiredGold()
     {
         var training = DefaultTable.Training.GetList().Find(x => x.TID == TID);
-        BigInteger requiredGold = (BigInteger)(Mathf.RoundToInt(training.LevelUpGold * Mathf.Pow(PlayerManager.I.skillLevelDic[TID] + 1, training.LevelUpGoldIncrease)));
+        BigInteger requiredGold = (BigInteger)(Mathf.RoundToInt(training.LevelUpGold * Mathf.Pow(PlayerManager.I.trainingSkillLevelDic[TID] + 1, training.LevelUpGoldIncrease)));
         return new Unified(requiredGold);
     }
     

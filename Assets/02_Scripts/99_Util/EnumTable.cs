@@ -27,3 +27,13 @@ public enum TrainingType
     FinalDamageRate
 }
 
+[UGS(typeof(AbilityType))]
+public enum AbilityType
+{
+    AttPower,
+    NormalAddDmg,
+    BossAddDmg,
+    NewAttack,
+    Execution,
+    FinalDamageRate
+}

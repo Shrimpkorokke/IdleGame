@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Training : MonoBehaviour
+public class TrainingMediator : MonoBehaviour
 {
-    [SerializeField, GetComponentInChildren(true)] private List<GrowthButton> growthButtonList;
-
+    [SerializeField, GetComponentInChildren(true)] private List<TrainingButton> growthButtonList;
+    
     private void OnEnable()
     {
         Init();
