@@ -20,23 +20,6 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public int needExp;
     public int abilityPoint;
     #endregion
-    
-    #region Training_Normal_Level
-    public int attPowerLv;
-    public int attSpeedLv;
-    [HideInInspector] public int criRateLv;
-    [HideInInspector] public int criDamageLv;
-    [HideInInspector] public int dmgPowerLv;
-    #endregion
-
-    #region  Training_Super_Level
-    [HideInInspector] public int attPowerSuperLv;
-    [HideInInspector] public int attSpeedSuperLv;
-    [HideInInspector] public int criRateSuperLv;
-    [HideInInspector] public int criDamageSuperLv;
-    [HideInInspector] public int dmgPowerSuperLv;
-    #endregion
-    
 
     #region Ray
     public float rayLength;
@@ -47,6 +30,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public ReactiveDictionary<int, int> abilitySkillLevelDic = new();
 
     [SerializeField] private Text txtLevel;
+    [SerializeField] private Text txtAbilityPoint;
+    
     private void Awake()
     {
         if(player == null)
@@ -79,6 +64,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             needExp = level * VARIABLE.Exp_Need;
         }
 
+        SetAbilityPoint();
         SetTextLevel();
         
         player.SetAttackSpeed();
@@ -176,7 +162,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
                 return;
         
             // 포인트 감소
-            abilityPoint--; 
+            abilityPoint -= ability.LevelUpPoint;
+            SetAbilityPoint();
         }
         
         abilitySkillLevelDic[tid]++;
@@ -208,6 +195,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         currentExp = 0;
         level++;
         abilityPoint++;
+        SetAbilityPoint();
         SetTextLevel();
         foreach (var VARIABLE in DefaultTable.Level.GetList())
         {
@@ -218,7 +206,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     public void SetAbilityPoint()
     {
-        
+        txtAbilityPoint.text = $"특성 포인트 : {abilityPoint}";
     }
 
     public void SetTextLevel()

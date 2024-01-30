@@ -41,12 +41,12 @@ public class Enemy : MonoBehaviour
         // 일반몹 추댐
         if (attackInfo.normalAddDmg && !isBoss)
         {
-            damage += damage * new Unified(1.1f);
+            damage = damage * new Unified(1.1f);
         }
         // 보스몹 추댐
         if (attackInfo.bossAddDmg && isBoss)
         {
-            damage += damage * new Unified(1.1f);
+            damage = damage * new Unified(1.1f);
         }
         
         // 5번째 공격일 때
