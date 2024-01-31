@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -57,7 +58,8 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     private void SpawnEnemy()
     {
-        GameObject instance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        // 풀에서 가져오고 리스트에 저장
+        GameObject instance = ObjectPoolManager.I.SpawnFromPool("Enemy", transform.position, quaternion.identity);
         enemyList.Add(instance);
     }
 
@@ -67,12 +69,15 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         bossSpawned = true;
         ShowBtnBoss(false);
         
-        GameObject instance = Instantiate(bossPrefab, new Vector3(transform.position.x, 1, 0), Quaternion.identity);
+        // 풀에서 가져오고 리스트에 저장
+        GameObject instance = ObjectPoolManager.I.SpawnFromPool("Boss", transform.position, quaternion.identity);
+        bossList.Add(instance);
+        
         for (int i = enemyList.Count - 1; i >= 0; i--)
         {
             GameObject go = enemyList[i];
+            go.GetComponent<Enemy>().ReturnToPool();
             enemyList.Remove(go);
-            Destroy(go);
         }
     }
 

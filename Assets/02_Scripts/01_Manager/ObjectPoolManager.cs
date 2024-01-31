@@ -88,9 +88,11 @@ public class ObjectPoolManager : MonoSingleton<ObjectPoolManager>
         objectToSpawn.transform.rotation = rotation;
 
         // IPooledObject 인터페이스가 있을 경우 OnObjectSpawn 호출
-        IPooledObject pooledObj = objectToSpawn.GetComponent<IPooledObject>();
+        
+        IPooledObject pooledObj = objectToSpawn.GetComponentInChildren<IPooledObject>();
         if (pooledObj != null)
         {
+            Debug.Log("!!!!!!!");
             pooledObj.OnObjectSpawn();
         }
 

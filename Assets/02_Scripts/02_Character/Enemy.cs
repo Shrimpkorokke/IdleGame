@@ -5,7 +5,7 @@ using System.Numerics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPooledObject
 {
     private Unified hp = new Unified(500);
     [SerializeField] private bool isBoss;
@@ -14,14 +14,14 @@ public class Enemy : MonoBehaviour
     [SerializeField, GetComponentInChildrenName("Pos_DamageText")] private Transform posDamageText;
     public void Start()
     {
-        foreach (var stageMonster in DefaultTable.StageMonster.GetList())
+        /*foreach (var stageMonster in DefaultTable.StageMonster.GetList())
         {
             BigInteger temp = (BigInteger)(stageMonster.HP_Base *
                                          Mathf.Pow(StageManager.I.GetCurrnetStage(), isBoss ? stageMonster.HPBoss_Increase : stageMonster.HP_Increase));
             
             hp = new Unified(temp);
             //Debug.Log($"hp: {hp} HP_Increase: {stageMonster.HP_Increase}");
-        }
+        }*/
     }
 
     public void GetDamage(AttackInfo attackInfo)
@@ -129,7 +129,33 @@ public class Enemy : MonoBehaviour
         {
             StageManager.I.IncreaseCount(5);
         }
-        
-        Destroy(transform.parent.gameObject);
+
+        ReturnToPool();
+    }
+
+    public void ReturnToPool()
+    {
+        string tag = isBoss ? "Boss" : "Enemy";
+        ObjectPoolManager.I.ReturnToPool(tag, transform.parent.gameObject);
+    }
+    public void OnObjectSpawn()
+    {
+        Debug.Log("AAAAAAAAAAA");
+        foreach (var stageMonster in DefaultTable.StageMonster.GetList())
+        {
+            BigInteger temp = (BigInteger)(stageMonster.HP_Base *
+                                           Mathf.Pow(StageManager.I.GetCurrnetStage(), isBoss ? stageMonster.HPBoss_Increase : stageMonster.HP_Increase));
+            
+            hp = new Unified(temp);
+            if (isBoss)
+            {
+                hp *= new Unified(2);
+            }
+            //Debug.Log($"hp: {hp} HP_Increase: {stageMonster.HP_Increase}");
+        }
+    }
+
+    public void OnObjectReturn()
+    {
     }
 }

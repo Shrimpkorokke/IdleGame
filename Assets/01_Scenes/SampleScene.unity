@@ -23793,8 +23793,8 @@ MonoBehaviour:
   bossSpawned: 0
   currentTime: 0
   minTime: 0.2
-  maxTime: 1.5
-  maxCount: 10
+  maxTime: 1
+  maxCount: 20
   currentCount: 0
 --- !u!1 &1734065889
 GameObject:
