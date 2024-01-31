@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour
         if (attackInfo.fiveAttack)
         {
             damage *= new Unified(2f);
+            CameraShake.I.ShakeCamera();
         }
         
         // 최종 대미지 증가
