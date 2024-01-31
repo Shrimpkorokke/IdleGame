@@ -63,6 +63,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     public void SpawnBoss()
     {
+        CameraFade.I.StartFade();
         bossSpawned = true;
         ShowBtnBoss(false);
         
