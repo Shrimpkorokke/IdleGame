@@ -70,13 +70,13 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         ShowBtnBoss(false);
         
         // 풀에서 가져오고 리스트에 저장
-        GameObject instance = ObjectPoolManager.I.SpawnFromPool("Boss", transform.position, quaternion.identity);
+        GameObject instance = ObjectPoolManager.I.SpawnFromPool("Boss", transform.position + new Vector3(0, 0.5f, 0), quaternion.identity);
         bossList.Add(instance);
         
         for (int i = enemyList.Count - 1; i >= 0; i--)
         {
             GameObject go = enemyList[i];
-            go.GetComponent<Enemy>().ReturnToPool();
+            go.GetComponentInChildren<Enemy>().ReturnToPool();
             enemyList.Remove(go);
         }
     }
@@ -95,5 +95,15 @@ public class SpawnManager : MonoSingleton<SpawnManager>
     public void ShowBtnBoss(bool show)
     {
         btnBoss.gameObject.SetActive(show);
+    }
+
+    public void FailBoss()
+    {
+        DieBoss();
+        foreach (var VARIABLE in bossList)
+        {
+            VARIABLE.GetComponentInChildren<Enemy>().ReturnToPool();
+        }
+        bossList.RemoveAll(x=> x);
     }
 }

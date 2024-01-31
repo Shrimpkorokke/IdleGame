@@ -92,7 +92,6 @@ public class ObjectPoolManager : MonoSingleton<ObjectPoolManager>
         IPooledObject pooledObj = objectToSpawn.GetComponentInChildren<IPooledObject>();
         if (pooledObj != null)
         {
-            Debug.Log("!!!!!!!");
             pooledObj.OnObjectSpawn();
         }
 

@@ -25,9 +25,10 @@ public class StageManager : MonoSingleton<StageManager>
         if (SpawnManager.I.bossSpawned && PlayerManager.I.isAttack)
         {
             currentTime -= Time.deltaTime;
-            if (currentTime == 0)
+            if (currentTime <= 0)
             {
                 sliderGuage.value = 0;
+                FailBoss();
             }
             else
             {
@@ -69,10 +70,17 @@ public class StageManager : MonoSingleton<StageManager>
             sliderGuage.value = (float)this.count / 100;
         }
     }
-
     public void DieBoss()
     {
         IncreaseStage();
+        count = 0;
+        sliderGuage.value = 0;
+    }
+
+    public void FailBoss()
+    {
+        SpawnManager.I.FailBoss();
+        CameraFade.I.StartFade();
         count = 0;
         sliderGuage.value = 0;
     }
