@@ -313,8 +313,9 @@ GameObject:
   - component: {fileID: 23520706}
   - component: {fileID: 23520707}
   - component: {fileID: 23520708}
+  - component: {fileID: 23520709}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: LocalManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,6 +420,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleTimeLimit: 60
   reducedFrameRate: 30
+--- !u!114 &23520709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23520702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a85a303c68e67d40936cc04210289a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - tag: Enemy
+    prefab: {fileID: 6821735282956843129, guid: b7200de0408fef146ba9dfc994e2cbc7, type: 3}
+    size: 10
+  - tag: Boss
+    prefab: {fileID: 8506403032815566778, guid: 9a02a06fd2976f043ae11a57211e6b78, type: 3}
+    size: 2
+  - tag: HitEffect
+    prefab: {fileID: 1429954232896169633, guid: 4617b9d85b36eb545b51c9ffa354cc5f, type: 3}
+    size: 2
 --- !u!1 &25505942
 GameObject:
   m_ObjectHideFlags: 0

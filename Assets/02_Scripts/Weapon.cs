@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class Weapon : MonoBehaviour
             }
             
             collider2D.gameObject.GetComponent<Enemy>()?.GetDamage(info);
+            ObjectPoolManager.I.SpawnFromPool("HitEffect", collider2D.transform.position, quaternion.identity);
         }
     }   
 }
