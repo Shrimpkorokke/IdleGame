@@ -26,7 +26,6 @@ public class Popup : MonoBehaviour
     {
         gameObject.SetActive(true);
         PopupManager.I.isPopupOpened = true;
-
     }
 
     public virtual void Close()

@@ -37,3 +37,14 @@ public enum AbilityType
     Execution,
     FinalDamageRate
 }
+
+[UGS(typeof(WeaponGrade))]
+public enum WeaponGrade
+{
+    Wood,
+    Iron,
+    Gold,
+    Dia,
+    Red
+}
+

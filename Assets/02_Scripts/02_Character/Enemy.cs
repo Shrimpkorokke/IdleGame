@@ -140,7 +140,6 @@ public class Enemy : MonoBehaviour, IPooledObject
     }
     public void OnObjectSpawn()
     {
-        Debug.Log("AAAAAAAAAAA");
         foreach (var stageMonster in DefaultTable.StageMonster.GetList())
         {
             BigInteger temp = (BigInteger)(stageMonster.HP_Base *
