@@ -10467,7 +10467,7 @@ GameObject:
   - component: {fileID: 686326180}
   - component: {fileID: 686326179}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Txt_Price
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16505,6 +16505,7 @@ MonoBehaviour:
   btnNext: {fileID: 1811115844}
   btnEquipment: {fileID: 924958865}
   btnBuy: {fileID: 369741687}
+  txtPrice: {fileID: 686326180}
 --- !u!1 &1081526391
 GameObject:
   m_ObjectHideFlags: 0
