@@ -72,8 +72,9 @@ public class Player : MonoBehaviour
     {
         var attPowerTrainingList = DefaultTable.Training.GetList().FindAll(x => x.TrainingType == TrainingType.AttPower);
         var attPowerAbilityList = DefaultTable.Ability.GetList().FindAll(x => x.AbilityType == AbilityType.AttPower);
+        var weaponAttPower = DefaultTable.Weapons.GetList().Find(x => x.TID == DataManager.I.playerData.currentWeapon).Attack_Power;
         
-        float finalPower = basePower;
+        float finalPower = basePower + weaponAttPower;
         float rate = 0;
         
         foreach (var VARIABLE in attPowerTrainingList)
