@@ -38,7 +38,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             player = GameObject.Find("Player").GetComponent<Player>();
         
         //player.basePower = DefaultTable.PlayerStat.GetList()[0].attPower;
-        player.basePower = DefaultTable.Weapons.GetList().Find(x => x.TID == DataManager.I.playerData.currentWeapon).Attack_Power;
+        player.basePower = DefaultTable.PlayerStat.GetList()[0].attPower;
         player.baseSpeed = DefaultTable.PlayerStat.GetList()[0].attSpeed;
         player.baseCriRate = DefaultTable.PlayerStat.GetList()[0].criRate;
         player.baseCriDmgRate = DefaultTable.PlayerStat.GetList()[0].criDamage;
