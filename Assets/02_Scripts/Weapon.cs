@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField, GetComponent] private SpriteRenderer spriteRenderer;
     private int fiveAttack = 0;
     private void OnTriggerEnter2D(Collider2D collider2D)
     {
@@ -39,7 +40,12 @@ public class Weapon : MonoBehaviour
             collider2D.gameObject.GetComponent<Enemy>()?.GetDamage(info);
             ObjectPoolManager.I.SpawnFromPool("HitEffect", collider2D.transform.position, quaternion.identity);
         }
-    }   
+    }
+
+    public void ChangeWeaponSprite(Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
+    }
 }
 
 public struct AttackInfo

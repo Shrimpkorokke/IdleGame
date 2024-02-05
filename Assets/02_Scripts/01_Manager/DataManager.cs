@@ -32,9 +32,9 @@ public class DataManager : MonoSingleton<DataManager>
                 // 무기
                 ownedWeapons = new(){0}, currentWeapon = 0,
                 // 재화, 포인트
-                gold = new Unified(0), stone = new Unified(0), point = new Unified(0),
+                gold = "0", stone = "0", point = "0",
                 //레벨, exp
-                level = new Unified(1), exp = new Unified(100),
+                level = "0", exp = "100",
                 // 옵션
                 bgmValue = 1, sfxValue = 1, shaking = true, autoPowerSaving = true
             };
@@ -65,13 +65,13 @@ public struct PlayerData
     public int currentWeapon;
     
     // 재화, 포인트
-    public Unified gold;
-    public Unified stone;
-    public Unified point;
+    public string gold;
+    public string stone;
+    public string point;
     
     // 레벨, Exp
-    public Unified level;
-    public Unified exp;
+    public string level;
+    public string exp;
     #endregion
 
     #region Option

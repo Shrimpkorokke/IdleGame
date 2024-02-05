@@ -6,7 +6,7 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField, GetComponentInChildren] private Weapon weapon;
+    [SerializeField, GetComponentInChildren] public Weapon weapon;
     [SerializeField, GetComponent] private Animator playerAni;
     [SerializeField, GetComponentInChildrenName("Pickaxe")] private Animator pickaxeAni;
     

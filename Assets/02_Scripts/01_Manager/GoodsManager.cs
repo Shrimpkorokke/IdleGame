@@ -10,8 +10,11 @@ public class GoodsManager : MonoSingleton<GoodsManager>
     [SerializeField] private Unified gold = new();
     [SerializeField] private Unified stone = new();
 
-    protected override void Awake()
+    private void Start()
     {
+        gold = new Unified(BigInteger.Parse(DataManager.I.playerData.gold));
+        stone = new Unified(BigInteger.Parse(DataManager.I.playerData.stone));
+
         SetGoldText();
         SetStoneText();
     }
@@ -20,7 +23,11 @@ public class GoodsManager : MonoSingleton<GoodsManager>
     {
         return gold;
     }
-    
+
+    public Unified GetStone()
+    {
+        return stone;
+    }
     public void IncreaseGold(Unified gold)
     {
         this.gold += gold;
