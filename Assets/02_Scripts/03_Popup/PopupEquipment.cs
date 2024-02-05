@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class PopupEquipment : Popup
 {
-    [SerializeField] private Sprite[] weapons;
+    [SerializeField] public Sprite[] weapons;
     private Dictionary<WeaponGrade, Sprite> spriteDic = new();
-    [SerializeField] private Sprite redWeapon;
+    [SerializeField] public Sprite redWeapon;
     
     [SerializeField, GetComponentInChildrenName("Img_Weapon")] private Image imgWeapon;
     

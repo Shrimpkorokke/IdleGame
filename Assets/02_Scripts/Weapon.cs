@@ -10,6 +10,18 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField, GetComponent] private SpriteRenderer spriteRenderer;
     private int fiveAttack = 0;
+
+    private void Start()
+    {
+        var a = PopupManager.I.popups.Find( x=> x.GetType() == typeof(PopupEquipment));
+        var b = a as PopupEquipment;
+        
+        if(DataManager.I.playerData.currentWeapon == b.weapons.Length - 1)
+            ChangeWeaponSprite(b.redWeapon);
+        else
+            ChangeWeaponSprite(b.weapons[DataManager.I.playerData.currentWeapon]);
+    }
+
     private void OnTriggerEnter2D(Collider2D collider2D)
     {
         if (collider2D.gameObject.CompareTag("Enemy"))
