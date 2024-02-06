@@ -9,7 +9,8 @@ public class GoodsManager : MonoSingleton<GoodsManager>
     [SerializeField] private Text TxtStone;
     [SerializeField] private Unified gold = new();
     [SerializeField] private Unified stone = new();
-
+    public Unified idleGold;
+    public Unified idleStone;
     private void Start()
     {
         gold = new Unified(BigInteger.Parse(DataManager.I.playerData.gold));
@@ -62,5 +63,29 @@ public class GoodsManager : MonoSingleton<GoodsManager>
     public void SetStoneText()
     {
         TxtStone.text = stone.IntPart.BigintToString();
+    }
+
+    public Unified CalIdleGold(double timeGap)
+    {
+        BigInteger gold = 0;
+        foreach (var stageIdle in DefaultTable.StageIdle.GetList())
+        {
+            gold = (BigInteger)(stageIdle.Gold_Base *
+                                Mathf.Pow(StageManager.I.GetCurrnetStage(), stageIdle.Gold_Increase) * timeGap);
+        }
+        Debug.Log(gold);
+        return new Unified(gold);
+    }
+
+    public Unified CalIdleStone(float timeGap)
+    {
+        BigInteger stone = 0;
+        foreach (var stageIdle in DefaultTable.StageIdle.GetList())
+        {
+            stone = (BigInteger)(stageIdle.Stone_Base *
+                                 Mathf.Pow(StageManager.I.GetCurrnetStage(), stageIdle.Stone_Increase) * timeGap);
+        }
+
+        return new Unified(stone);
     }
 }

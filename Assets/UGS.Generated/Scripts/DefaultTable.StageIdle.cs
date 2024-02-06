@@ -60,6 +60,7 @@ namespace DefaultTable
 		public System.Single Gold_Increase;
 		public System.Int32 Stone_Base;
 		public System.Single Stone_Increase;
+		public System.Single Max_Time;
   
 
 #region fuctions

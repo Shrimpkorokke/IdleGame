@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TimeManager : MonoSingleton<TimeManager>
 {
@@ -8,23 +9,21 @@ public class TimeManager : MonoSingleton<TimeManager>
     public int reducedFrameRate = 30; // 비활성 상태일 때의 프레임 레이트
     private float lastInputTime; // 마지막으로 입력이 감지된 시간
     private bool isIdle;
-
+    private DateTime idleStartTime; // 비활성 상태가 시작된 시간
+    
     void Start()
     {
-        // 초기 마지막 입력 시간을 현재 시간으로 설정
         lastInputTime = Time.time;
     }
 
     void Update()
     {
-        // 사용자 입력 감지
         if (Input.touchCount > 0)
         {
             lastInputTime = Time.time;
 
             if (isIdle == true)
             {
-                // 프레임 레이트를 기본값으로 재설정
                 Touch touch = Input.GetTouch(0);
 
                 if (touch.phase == TouchPhase.Moved)
@@ -32,11 +31,17 @@ public class TimeManager : MonoSingleton<TimeManager>
                     PopupManager.I.GetPopup<PopupIdle>().Close();
                     isIdle = false;
                     Application.targetFrameRate = -1;
+                    Time.timeScale = 1;
+                    // 비활성 상태에서 활성 상태로 전환 시 경과한 시간 계산 및 출력
+                    TimeSpan timeSpan = DateTime.Now - idleStartTime;
+                    
+                    var gap = timeSpan.TotalSeconds > DefaultTable.StageIdle.GetList()[0].Max_Time ? DefaultTable.StageIdle.GetList()[0].Max_Time : timeSpan.TotalSeconds;
+                    GoodsManager.I.CalIdleGold(gap);
+                    Debug.Log($"User was idle for {timeSpan.TotalSeconds} seconds.");
                 }
             }
         }
 
-        // 유저가 설정한 시간 동안 아무런 동작을 하지 않은 경우 프레임 레이트를 낮춤
         if (Time.time - lastInputTime > idleTimeLimit)
         {
             if (isIdle == false)
@@ -44,6 +49,10 @@ public class TimeManager : MonoSingleton<TimeManager>
                 isIdle = true;
                 PopupManager.I.GetPopup<PopupIdle>().Open();
                 Application.targetFrameRate = reducedFrameRate;
+                Time.timeScale = 0.5f;
+
+                // 현재 날짜 및 시간 저장
+                idleStartTime = DateTime.Now;
             }
         }
     }
