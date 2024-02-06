@@ -1,36 +1,101 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-using UnityEngine.Serialization;
+using GooglePlayGames.BasicApi.SavedGame;
+using GooglePlayGames.BasicApi.Events;
 
-public class GPGSManager : MonoBehaviour
+
+public class GPGSManager
 {
-    [SerializeField] private Text txtLog;
-    [SerializeField] private Button btnLogin;
-    void Start()
+    static GPGSManager inst = new GPGSManager();
+    public static GPGSManager I => inst;
+
+    ISavedGameClient SavedGame => 
+        PlayGamesPlatform.Instance.SavedGame;
+
+    IEventsClient Events =>
+        PlayGamesPlatform.Instance.Events;
+
+
+
+    void Init()
     {
-        btnLogin.onClick.AddListener(() => Login());
+        var config = new PlayGamesClientConfiguration.Builder().EnableSavedGames().Build();
+        PlayGamesPlatform.InitializeInstance(config);
+        PlayGamesPlatform.DebugLogEnabled = true;
+        PlayGamesPlatform.Activate();
     }
 
-    public void Login()
+
+    public void Login(Action<bool, UnityEngine.SocialPlatforms.ILocalUser> onLoginSuccess = null)
     {
-        PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptOnce, (result) =>
+        Init();
+        PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptAlways, (success) =>
         {
-            if (result == SignInStatus.Success)
-            {
-                // 유저가 변경 가능
-                string displayName = PlayGamesPlatform.Instance.GetUserDisplayName();
-                // 유저가 변경 불가능
-                string userID = PlayGamesPlatform.Instance.GetUserId();
-                txtLog.text = $"로그인 성공 : {displayName} {userID}";
-            }
-            else
-            {
-                txtLog.text = "로그인 실패";
-            }
+            onLoginSuccess?.Invoke(success == SignInStatus.Success, Social.localUser);
         });
     }
+
+    public void Logout()
+    {
+        PlayGamesPlatform.Instance.SignOut();
+    }
+
+
+    public void SaveCloud(string fileName, string saveData, Action<bool> onCloudSaved = null)
+    {
+        SavedGame.OpenWithAutomaticConflictResolution(fileName, DataSource.ReadCacheOrNetwork,
+            ConflictResolutionStrategy.UseLastKnownGood, (status, game) =>
+            {
+                if (status == SavedGameRequestStatus.Success)
+                {
+                    var update = new SavedGameMetadataUpdate.Builder().Build();
+                    byte[] bytes = System.Text.Encoding.UTF8.GetBytes(saveData);
+                    SavedGame.CommitUpdate(game, update, bytes, (status2, game2) =>
+                    {
+                        onCloudSaved?.Invoke(status2 == SavedGameRequestStatus.Success);
+                    });
+                }
+            });
+    }
+
+    public void LoadCloud(string fileName, Action<bool, string> onCloudLoaded = null)
+    {
+        SavedGame.OpenWithAutomaticConflictResolution(fileName, DataSource.ReadCacheOrNetwork, 
+            ConflictResolutionStrategy.UseLastKnownGood, (status, game) => 
+            {
+                if (status == SavedGameRequestStatus.Success)
+                {
+                    SavedGame.ReadBinaryData(game, (status2, loadedData) =>
+                    {
+                        if (status2 == SavedGameRequestStatus.Success)
+                        {
+                            string data = System.Text.Encoding.UTF8.GetString(loadedData);
+                            onCloudLoaded?.Invoke(true, data);
+                        }
+                        else
+                            onCloudLoaded?.Invoke(false, null);
+                    });
+                }
+            });
+    }
+
+    public void DeleteCloud(string fileName, Action<bool> onCloudDeleted = null)
+    {
+        SavedGame.OpenWithAutomaticConflictResolution(fileName,
+            DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, (status, game) =>
+            {
+                if (status == SavedGameRequestStatus.Success)
+                {
+                    SavedGame.Delete(game);
+                    onCloudDeleted?.Invoke(true);
+                }
+                else 
+                    onCloudDeleted?.Invoke(false);
+            });
+    }
+
 }
