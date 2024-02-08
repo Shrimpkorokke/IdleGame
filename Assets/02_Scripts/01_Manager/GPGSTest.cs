@@ -50,7 +50,7 @@ public class GPGSTest : MonoBehaviour
         });
         btnLoadScene.onClick.AddListener(() =>
         {
-            LoadingSceneController.LoadScene("SceneLoading");
+            LoadingSceneController.LoadScene("SceneBattle");
         });
     }
 }

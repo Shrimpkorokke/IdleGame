@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class LoadingSceneController : MonoBehaviour
 {
-    static string nextScene = "SceneBattle";
+    static string nextScene;
     [SerializeField] private Slider progressBar;
     public static void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        nextScene = sceneName;
+        SceneManager.LoadScene("SceneLoading");
     }
 
     private void Start()
@@ -30,18 +31,19 @@ public class LoadingSceneController : MonoBehaviour
 
             if (op.progress < 0.9f)
             {
-                progressBar.value = op.progress;
+                progressBar.value = Mathf.MoveTowards(progressBar.value, 0.9f, Time.deltaTime);
             }
-            else
+            else if(op.progress >= 0.9f)
             {
-                timer += Time.unscaledDeltaTime;
-                progressBar.value = Mathf.Lerp(0.9f, 1f, timer);
-                if(progressBar.value >= 1f)
-                {
-                    op.allowSceneActivation = true;
-                    yield break;
-                }
+                progressBar.value = Mathf.MoveTowards(progressBar.value, 1f, Time.deltaTime);
             }
+
+            if (progressBar.value >= 1f && op.progress >= 0.9f)
+            {
+                op.allowSceneActivation = true;
+                yield break;
+            }
+
         }
     }
 }
