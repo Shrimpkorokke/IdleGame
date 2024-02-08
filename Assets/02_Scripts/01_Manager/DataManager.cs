@@ -43,7 +43,7 @@ public class DataManager : MonoSingleton<DataManager>
         }
         playerData = JsonUtility.FromJson<PlayerData>(data);
     }
-    
+
     public void SaveData()
     {
         // Data => Json
@@ -51,6 +51,34 @@ public class DataManager : MonoSingleton<DataManager>
         
         // 저장
         File.WriteAllText(path + nameof(PlayerData), data);
+    }
+
+    public void JsontoPlayerData(string data)
+    {
+        playerData = JsonUtility.FromJson<PlayerData>(data);
+    }
+
+    public void SetMetaData()
+    {
+        playerData = new()
+        {
+            nickName = "Test",
+            // 무기
+            ownedWeapons = new(){0}, currentWeapon = 0,
+            // 재화, 포인트
+            gold = "0", stone = "0", point = "0",
+            //레벨, exp
+            level = "0", exp = "100",
+            // 옵션
+            bgmValue = 1, sfxValue = 1, shaking = true, autoPowerSaving = true
+        };
+    }
+
+    public string GetJsonPlayerData()
+    {
+        // Data => Json
+        string data = JsonUtility.ToJson(this.playerData);
+        return data;
     }
 }
 

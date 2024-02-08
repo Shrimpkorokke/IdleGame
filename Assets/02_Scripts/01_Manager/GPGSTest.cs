@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,11 @@ public class GPGSTest : MonoBehaviour
         btnLogin.onClick.AddListener(() =>
         {
             GPGSManager.I.Login((success, localUser) =>
-                log.text = $"{success}, {localUser.userName}, {localUser.id}, {localUser.state}, {localUser.underage}");
+            {
+                log.text = $"{success}, {localUser.userName}, {localUser.id}, {localUser.state}, {localUser.underage}";
+
+               
+            });
         });
         
         // 로그아웃
@@ -41,7 +46,8 @@ public class GPGSTest : MonoBehaviour
         // 트로일 때 데이터가 존재하면 데이터를 바탕으로 세팅한다.
         btnLoad.onClick.AddListener(() =>
         {
-            GPGSManager.I.LoadCloud("PickaxeMaster_PlayerData", (success, data) => log.text = $"{success}, {data}");
+            //GPGSManager.I.LoadCloud("PickaxeMaster_PlayerData", (success, data) => log.text = $"{success}, {data}");
+            LoadCloud();
         });
         
         btnDelete.onClick.AddListener(() =>
@@ -52,5 +58,39 @@ public class GPGSTest : MonoBehaviour
         {
             LoadingSceneController.LoadScene("SceneBattle");
         });
+    }
+
+    public void LoadCloud()
+    {
+        // 로드 데이터
+        GPGSManager.I.LoadCloud("PickaxeMaster_PlayerData", (success, data) =>
+        {
+            log.text = $"{success}, {data}";
+            if(success) 
+            {
+                // 데이터가 있을 때
+                if (string.IsNullOrEmpty(data) == false)
+                {
+                    DataManager.I.JsontoPlayerData(data);
+                    Debug.Log($"데이터가 있음: {data}");
+                }
+                // 데이터가 없을 때
+                else
+                {
+                    DataManager.I.SetMetaData();
+                    SaveCloud();
+                    Debug.Log($"데이터가 없음: {data}");
+                }
+            }
+            else
+            {
+                // 오류 표시
+            }
+        });
+    }
+
+    public void SaveCloud()
+    {
+        GPGSManager.I.SaveCloud("PickaxeMaster_PlayerData", DataManager.I.GetJsonPlayerData(), success => log.text = $"{success}");
     }
 }
