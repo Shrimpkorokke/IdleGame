@@ -65,7 +65,7 @@ public class GoodsManager : MonoSingleton<GoodsManager>
         TxtStone.text = stone.IntPart.BigintToString();
     }
 
-    public Unified CalIdleGold(double timeGap)
+    public void CalIdleGoods(double timeGap)
     {
         BigInteger gold = 0;
         foreach (var stageIdle in DefaultTable.StageIdle.GetList())
@@ -73,12 +73,9 @@ public class GoodsManager : MonoSingleton<GoodsManager>
             gold = (BigInteger)(stageIdle.Gold_Base *
                                 Mathf.Pow(StageManager.I.GetCurrnetStage(), stageIdle.Gold_Increase) * timeGap);
         }
-        Debug.Log(gold);
-        return new Unified(gold);
-    }
 
-    public Unified CalIdleStone(float timeGap)
-    {
+        idleGold = new Unified(gold);
+
         BigInteger stone = 0;
         foreach (var stageIdle in DefaultTable.StageIdle.GetList())
         {
@@ -86,6 +83,17 @@ public class GoodsManager : MonoSingleton<GoodsManager>
                                  Mathf.Pow(StageManager.I.GetCurrnetStage(), stageIdle.Stone_Increase) * timeGap);
         }
 
-        return new Unified(stone);
+        idleStone = new Unified(stone);
+    }
+
+    public void ObtainIdleGoods(bool isBonus = false)
+    {
+        idleGold = isBonus ? idleGold * new Unified(2) : idleGold ;
+        idleStone = isBonus ? idleStone * new Unified(2) : idleStone ;
+        this.gold += idleGold;
+        this.stone += idleStone;
+
+        SetGoldText();
+        SetStoneText();
     }
 }

@@ -28,7 +28,7 @@ public class TimeManager : MonoSingleton<TimeManager>
 
                 if (touch.phase == TouchPhase.Moved)
                 {
-                    PopupManager.I.GetPopup<PopupIdle>().Close();
+                    //PopupManager.I.GetPopup<PopupIdle>().Close();
                     isIdle = false;
                     Application.targetFrameRate = -1;
                     Time.timeScale = 1;
@@ -36,7 +36,11 @@ public class TimeManager : MonoSingleton<TimeManager>
                     TimeSpan timeSpan = DateTime.Now - idleStartTime;
                     
                     var gap = timeSpan.TotalSeconds > DefaultTable.StageIdle.GetList()[0].Max_Time ? DefaultTable.StageIdle.GetList()[0].Max_Time : timeSpan.TotalSeconds;
-                    GoodsManager.I.CalIdleGold(gap);
+                    GoodsManager.I.CalIdleGoods(gap);
+                    var popupReward = PopupManager.I.GetPopup<PopupIdleReward>();
+                    popupReward.Open();
+                    popupReward.Init();
+
                     Debug.Log($"User was idle for {timeSpan.TotalSeconds} seconds.");
                 }
             }
