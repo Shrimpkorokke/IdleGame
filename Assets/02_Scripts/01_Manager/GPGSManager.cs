@@ -8,11 +8,8 @@ using GooglePlayGames.BasicApi.SavedGame;
 using GooglePlayGames.BasicApi.Events;
 
 
-public class GPGSManager
+public class GPGSManager : MonoSingleton<GPGSManager>
 {
-    static GPGSManager inst = new GPGSManager();
-    public static GPGSManager I => inst;
-
     ISavedGameClient SavedGame => 
         PlayGamesPlatform.Instance.SavedGame;
 
