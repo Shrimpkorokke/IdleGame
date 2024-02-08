@@ -16,7 +16,8 @@ public class Option : MonoBehaviour
     private void Awake()
     {
         DeletePLayerPrefs();
-        
+        Application.runInBackground = true;
+
         btnOption.onClick.AddListener(() => option.SetActive(true));
         btnSetting.onClick.AddListener(() =>
         {
