@@ -77,7 +77,7 @@ public class GPGSTest : MonoBehaviour
                 // 데이터가 없을 때
                 else
                 {
-                    DataManager.I.SetMetaData();
+                    DataManager.I.SetCloudMetaData();
                     SaveCloud();
                     Debug.Log($"데이터가 없음: {data}");
                 }

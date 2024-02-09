@@ -16,9 +16,9 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     #region Level
     [SerializeField] private int level = 1;
-    public int currentExp;
-    public int needExp;
-    public int abilityPoint;
+    [SerializeField] private int currentExp;
+    private int needExp;
+    [SerializeField] private int abilityPoint;
     #endregion
 
     #region Ray
@@ -213,5 +213,20 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public void SetTextLevel()
     {
         txtLevel.text = $"Lv.{level.ToString()}";
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public int GetCurrentExp()
+    {
+        return currentExp;
+    }
+
+    public int GetAbilityPoint()
+    {
+        return abilityPoint;
     }
 }

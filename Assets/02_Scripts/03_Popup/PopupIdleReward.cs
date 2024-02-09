@@ -28,6 +28,7 @@ public class PopupIdleReward : Popup
         btnObtain.onClick.AddListener(() =>
         {
             GoodsManager.I.ObtainIdleGoods(false);
+            DataManager.I.SaveCloud();
             this.Close();
         });
     }
