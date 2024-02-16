@@ -10,6 +10,7 @@ public class PopupIdleReward : Popup
 
     [SerializeField, GetComponentInChildrenName("Btn_Bonus")] private Button btnBonus;
     [SerializeField, GetComponentInChildrenName("Btn_Obtain")] private Button btnObtain;
+    [SerializeField, GetComponentInChildrenName("Btn_BG")] private Button btnBG;
 
     public void Init()
     {
@@ -29,6 +30,11 @@ public class PopupIdleReward : Popup
         {
             GoodsManager.I.ObtainIdleGoods(false);
             DataManager.I.SaveCloud();
+            this.Close();
+        });
+
+        btnBG.onClick.AddListener(() => 
+        {
             this.Close();
         });
     }

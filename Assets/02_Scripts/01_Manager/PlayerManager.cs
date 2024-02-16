@@ -43,8 +43,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         player.baseCriRate = DefaultTable.PlayerStat.GetList()[0].criRate;
         player.baseCriDmgRate = DefaultTable.PlayerStat.GetList()[0].criDamage;
         player.baseFinalDamageRate = DefaultTable.PlayerStat.GetList()[0].finalDamage;
-        
-        // 훈련 레벨 딕셔너리
+
+        /*// 훈련 레벨 딕셔너리
         foreach (var VARIABLE in DefaultTable.Training.GetList())
         {
             // 추후 저장된 값을 집어 넣기 
@@ -56,17 +56,26 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         {
             // 추후 저장된 값을 집어 넣기 
             abilitySkillLevelDic[VARIABLE.TID] = 0;
+        }*/
+
+        foreach (var VARIABLE in DataManager.I.playerData.trainingLevelDic)
+        {
+            trainingSkillLevelDic[VARIABLE.Key] = VARIABLE.Value;
         }
-        
-        
+
+        foreach (var VARIABLE in DataManager.I.playerData.abilityLevelDic)
+        {
+            abilitySkillLevelDic[VARIABLE.Key] = VARIABLE.Value;
+        }
+
         // 필요 경험치 설정
         foreach (var VARIABLE in DefaultTable.Level.GetList())
         {
             needExp = level * VARIABLE.Exp_Need;
         }
 
-        SetAbilityPoint();
-        SetTextLevel();
+        SetTxtAbilityPoint();
+        SetTxtLevel();
         
         player.SetAttackSpeed();
         
@@ -164,7 +173,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         
             // 포인트 감소
             abilityPoint -= ability.LevelUpPoint;
-            SetAbilityPoint();
+            SetTxtAbilityPoint();
         }
         
         abilitySkillLevelDic[tid]++;
@@ -196,8 +205,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         currentExp = 0;
         level++;
         abilityPoint++;
-        SetAbilityPoint();
-        SetTextLevel();
+        SetTxtAbilityPoint();
+        SetTxtLevel();
         foreach (var VARIABLE in DefaultTable.Level.GetList())
         {
             needExp = level * VARIABLE.Exp_Need;
@@ -205,12 +214,12 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         Debug.Log($"Levelup: level{level} currentExp: {currentExp}, needExp: {needExp}");
     }
 
-    public void SetAbilityPoint()
+    public void SetTxtAbilityPoint()
     {
         txtAbilityPoint.text = $"특성 포인트 : {abilityPoint}";
     }
 
-    public void SetTextLevel()
+    public void SetTxtLevel()
     {
         txtLevel.text = $"Lv.{level.ToString()}";
     }

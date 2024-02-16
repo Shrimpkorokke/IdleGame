@@ -10,6 +10,7 @@ public class Option : MonoBehaviour
     [SerializeField] private Button btnOption;
     [SerializeField] private Button btnSetting;
     [SerializeField] private Button btnPowerSaving;
+    [SerializeField] private Button btnSave;
     [SerializeField] private Button btnTitleExit;
     [SerializeField] private Button btnBG;
     [SerializeField] private GameObject option;
@@ -37,6 +38,24 @@ public class Option : MonoBehaviour
                 PopupManager.I.GetPopup<PopupIdle>().Open();
             
             option.SetActive(false);
+        });
+
+        btnSave.onClick.AddListener(() =>
+        {
+            if (PopupManager.I.IsPopupOpen<PopupSaveResult>())
+                PopupManager.I.GetPopup<PopupSaveResult>().Close();
+
+
+
+            DataManager.I.SaveCloud((success) =>
+            {
+                if (PopupManager.I.IsPopupOpen<PopupSaveResult>())
+                    PopupManager.I.GetPopup<PopupSaveResult>().Close();
+                var popupResult = PopupManager.I.GetPopup<PopupSaveResult>();
+                popupResult.Open();
+                popupResult.SetText(success);
+
+            });
         });
         
         btnTitleExit.onClick.AddListener(() => option.SetActive(false));

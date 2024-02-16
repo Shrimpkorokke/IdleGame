@@ -1,5 +1,8 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Experimental.AI;
@@ -24,7 +27,7 @@ public class DataManager : MonoSingleton<DataManager>
         playerData = JsonUtility.FromJson<PlayerData>(data);
     }
 
-    public void SaveCloud()
+    public void SaveCloud(Action<bool> onCloudSaved = null)
     {
         playerData.level = PlayerManager.I.GetLevel().ToString();
         playerData.exp = PlayerManager.I.GetCurrentExp().ToString();
@@ -33,11 +36,24 @@ public class DataManager : MonoSingleton<DataManager>
         playerData.gold = GoodsManager.I.GetGold().ToString();
         playerData.stone = GoodsManager.I.GetStone().ToString();
 
-        GPGSManager.I.SaveCloud("PickaxeMaster_PlayerData", GetJsonPlayerData(), success => Debug.Log($"{success}"));
+        GPGSManager.I.SaveCloud("PickaxeMaster_PlayerData", GetJsonPlayerData(), onCloudSaved);
     }
 
     public void SetCloudMetaData()
     {
+        Dictionary<int, int> trainingLevel = new();
+        Dictionary<int, int> abilityLevel = new();
+
+        foreach (var VARIABLE in DefaultTable.Training.GetList())
+        {
+            trainingLevel[VARIABLE.TID] = 0;
+        }
+
+        foreach (var VARIABLE in DefaultTable.Ability.GetList())
+        {
+            abilityLevel[VARIABLE.TID] = 0;
+        }
+
         playerData = new()
         {
             nickName = "Test",
@@ -47,6 +63,10 @@ public class DataManager : MonoSingleton<DataManager>
             gold = "0", stone = "0", point = "0",
             //레벨, exp
             level = "0", exp = "100",
+            // Training Level
+            
+            trainingLevelDic = trainingLevel,
+            abilityLevelDic = abilityLevel
         };
     }
 
@@ -72,29 +92,46 @@ public class DataManager : MonoSingleton<DataManager>
     {
          string data = "";
         // 파일이 있으면 불러옴
-        if (File.Exists(path + nameof(OptionData)))
+        if (File.Exists(path + "PickaxeMaster_PlayerData"))
         {
-            data = File.ReadAllText(path + nameof(OptionData));
+            data = File.ReadAllText(path + "PickaxeMaster_PlayerData");
         }
         // 파일이 없으면 메타데이터 생성 후 저장
         else
         {
+            Dictionary<int, int> trainingLevel = new();
+            Dictionary<int, int> abilityLevel = new();
+
+            foreach (var VARIABLE in DefaultTable.Training.GetList())
+            {
+                trainingLevel[VARIABLE.TID] = 0;
+            }
+
+            foreach (var VARIABLE in DefaultTable.Ability.GetList())
+            {
+                abilityLevel[VARIABLE.TID] = 0;
+            }
+
             playerData = new()
             {
                 nickName = "Test",
                 // 무기
-                ownedWeapons = new(){0}, currentWeapon = 0,
+                ownedWeapons = new() { 0 }, currentWeapon = 0,
                 // 재화, 포인트
                 gold = "0", stone = "0", point = "0",
                 //레벨, exp
                 level = "1", exp = "100",
-                // 옵션
-                //bgmValue = 1, sfxValue = 1, shaking = true, autoPowerSaving = true
+                // Training Level
+                trainingLevelDic = new(trainingLevel), 
+                abilityLevelDic = new(abilityLevel)
             };
-            data = JsonUtility.ToJson(this.playerData);
-            File.WriteAllText(path + nameof(PlayerData), data);
+
+            //data = JsonUtility.ToJson(this.playerData);
+            data = JsonConvert.SerializeObject(this.playerData);
+            File.WriteAllText(path + "PickaxeMaster_PlayerData", data);
         }
-        playerData = JsonUtility.FromJson<PlayerData>(data);
+        //playerData = JsonUtility.FromJson<PlayerData>(data);
+        playerData = JsonConvert.DeserializeObject<PlayerData>(data);
     }
 
     public string GetJsonPlayerData()
@@ -145,6 +182,10 @@ public struct PlayerData
     public string level;
     public string exp;
     #endregion
+
+    // 훈련 레벨
+    public Dictionary<int, int> trainingLevelDic;
+    public Dictionary<int, int> abilityLevelDic;
 }
 
 public struct OptionData
