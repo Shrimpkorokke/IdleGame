@@ -44,20 +44,6 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         player.baseCriDmgRate = DefaultTable.PlayerStat.GetList()[0].criDamage;
         player.baseFinalDamageRate = DefaultTable.PlayerStat.GetList()[0].finalDamage;
 
-        /*// 훈련 레벨 딕셔너리
-        foreach (var VARIABLE in DefaultTable.Training.GetList())
-        {
-            // 추후 저장된 값을 집어 넣기 
-            trainingSkillLevelDic[VARIABLE.TID] = 0;
-        }
-        
-        // 특성 레벨 딕셔너리
-        foreach (var VARIABLE in DefaultTable.Ability.GetList())
-        {
-            // 추후 저장된 값을 집어 넣기 
-            abilitySkillLevelDic[VARIABLE.TID] = 0;
-        }*/
-
         foreach (var VARIABLE in DataManager.I.playerData.trainingLevelDic)
         {
             trainingSkillLevelDic[VARIABLE.Key] = VARIABLE.Value;
@@ -67,6 +53,9 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         {
             abilitySkillLevelDic[VARIABLE.Key] = VARIABLE.Value;
         }
+
+        level = int.Parse(DataManager.I.playerData.level);
+        currentExp = int.Parse(DataManager.I.playerData.exp);
 
         // 필요 경험치 설정
         foreach (var VARIABLE in DefaultTable.Level.GetList())

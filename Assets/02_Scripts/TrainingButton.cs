@@ -29,6 +29,7 @@ public class TrainingButton : MonoBehaviour
             btn.SetButtonAction(() => PlayerManager.I.IncreaseTraining(this));
         SubscribeToDictionary();
 
+        // 텍스트 설정
         var level = PlayerManager.I.trainingSkillLevelDic[TID];
         var maxLevel = DefaultTable.Training.GetList().Find(x => x.TID == TID).MaxLevel;
 
@@ -42,8 +43,18 @@ public class TrainingButton : MonoBehaviour
             txtLevel.text = $"Lv.Max";
             SetTxtGold(true);
         }
-        SetTxtGold();
-        
+
+        // 커버 설정
+        var training = DefaultTable.Training.GetList().Find(x => x.TID == TID);
+        var unlockLevel = training.UnlockLevel;
+
+        if (PlayerManager.I.trainingSkillLevelDic.ContainsKey(TID))
+        {
+            if (PlayerManager.I.trainingSkillLevelDic[training.UnlockTID] >= training.UnlockLevel) 
+            {
+                UnlockCover();
+            }
+        }
     }
     
     public void SubscribeToDictionary()
@@ -57,12 +68,12 @@ public class TrainingButton : MonoBehaviour
             {
                 if (change.NewValue >= unlockLevel)
                 {
-                    AAAA();
+                    UnlockCover();
                 }
             }).AddTo(this);
     }
 
-    public void AAAA()
+    public void UnlockCover()
     {
         coverUnlock.SetActive(false);
     }
