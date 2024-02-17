@@ -10920,7 +10920,7 @@ MonoBehaviour:
   txtStone: {fileID: 919219047}
   btnBonus: {fileID: 1378091270}
   btnObtain: {fileID: 1345817943}
-  btnBG: {fileID: 0}
+  btnBG: {fileID: 331456170}
 --- !u!1 &635997742
 GameObject:
   m_ObjectHideFlags: 0
@@ -33566,7 +33566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2119678677
 RectTransform:
   m_ObjectHideFlags: 0

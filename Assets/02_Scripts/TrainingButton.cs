@@ -6,6 +6,8 @@ using System.Linq;
 using System.Numerics;
 using UnityEngine.Serialization;
 using UniRx;
+using DefaultTable;
+using System.Security.Cryptography;
 
 public class TrainingButton : MonoBehaviour
 {
@@ -26,7 +28,22 @@ public class TrainingButton : MonoBehaviour
         if(btn != null)
             btn.SetButtonAction(() => PlayerManager.I.IncreaseTraining(this));
         SubscribeToDictionary();
-        SetGoldTxt();
+
+        var level = PlayerManager.I.trainingSkillLevelDic[TID];
+        var maxLevel = DefaultTable.Training.GetList().Find(x => x.TID == TID).MaxLevel;
+
+        if (level < maxLevel)
+        {
+            txtLevel.text = $"Lv.{level}";
+            SetTxtGold(false);
+        }
+        else
+        {
+            txtLevel.text = $"Lv.Max";
+            SetTxtGold(true);
+        }
+        SetTxtGold();
+        
     }
     
     public void SubscribeToDictionary()
@@ -57,8 +74,13 @@ public class TrainingButton : MonoBehaviour
         return new Unified(requiredGold);
     }
     
-    public void SetGoldTxt(bool isMaxLevel = false)
+    public void SetTxtGold(bool isMaxLevel = false)
     { 
         txtGold.text = isMaxLevel ? "Max" : GetRequiredGold().IntPart.BigintToString();
+    }
+
+    public void SetTxtLevel()
+    {
+        txtLevel.text = $"Lv{PlayerManager.I.trainingSkillLevelDic[TID]}";
     }
 }

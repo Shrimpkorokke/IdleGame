@@ -139,12 +139,12 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         if (trainingSkillLevelDic[tid] < training.MaxLevel)
         {
             trainingButton.txtLevel.text = $"Lv.{trainingSkillLevelDic[tid]}";
-            trainingButton.SetGoldTxt(false);
+            trainingButton.SetTxtGold(false);
         }
         else
         {
             trainingButton.txtLevel.text = $"Lv.Max";
-            trainingButton.SetGoldTxt(true);
+            trainingButton.SetTxtGold(true);
         }
         
         if (training.TrainingType == TrainingType.AttSpeed)
