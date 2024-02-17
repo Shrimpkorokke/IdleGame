@@ -18,13 +18,13 @@ public class DataManager : MonoSingleton<DataManager>
         path = Application.persistentDataPath + "/";
         LoadLocalOptionData();
 #if UNITY_EDITOR
-        AAAA();
+        PCLoadData();
 #endif
     }
 
     public void JsontoPlayerData(string data)
     {
-        playerData = JsonUtility.FromJson<PlayerData>(data);
+        playerData = JsonConvert.DeserializeObject<PlayerData>(data);
     }
 
     public void SaveCloud(Action<bool> onCloudSaved = null)
@@ -35,6 +35,16 @@ public class DataManager : MonoSingleton<DataManager>
         playerData.point = PlayerManager.I.GetAbilityPoint().ToString();
         playerData.gold = GoodsManager.I.GetGold().ToString();
         playerData.stone = GoodsManager.I.GetStone().ToString();
+
+        foreach (var item in PlayerManager.I.trainingSkillLevelDic)
+        {
+            playerData.trainingLevelDic[item.Key] = item.Value;
+        }
+
+        foreach (var item in PlayerManager.I.abilitySkillLevelDic)
+        {
+            playerData.abilityLevelDic[item.Key] = item.Value;
+        }
 
         GPGSManager.I.SaveCloud("PickaxeMaster_PlayerData", GetJsonPlayerData(), onCloudSaved);
     }
@@ -88,7 +98,7 @@ public class DataManager : MonoSingleton<DataManager>
 
     // pc일 때 구글 로그인이 안돼서 로컬에 저장하는 방식으로 테스트를 진행해야함
 
-    public void AAAA()
+    public void PCLoadData()
     {
          string data = "";
         // 파일이 있으면 불러옴
@@ -137,7 +147,7 @@ public class DataManager : MonoSingleton<DataManager>
     public string GetJsonPlayerData()
     {
         // Data => Json
-        string data = JsonUtility.ToJson(this.playerData);
+        string data = JsonConvert.SerializeObject(this.playerData);
         return data;
     }
 
@@ -156,7 +166,7 @@ public class DataManager : MonoSingleton<DataManager>
     public void SaveLocal()
     {
         // Data => Json
-        string data = JsonUtility.ToJson(this.optionData);
+        string data = JsonConvert.SerializeObject(this.optionData);
 
         // 저장
         File.WriteAllText(path + "PickaxeMaster_OptionData", data);

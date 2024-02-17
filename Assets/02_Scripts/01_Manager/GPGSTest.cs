@@ -52,7 +52,7 @@ public class GPGSTest : MonoBehaviour
         
         btnDelete.onClick.AddListener(() =>
         {
-            GPGSManager.I.DeleteCloud("mysave", success => log.text = $"{success}");
+            GPGSManager.I.DeleteCloud("PickaxeMaster_PlayerData", success => log.text = $"{success}");
         });
         btnLoadScene.onClick.AddListener(() =>
         {
