@@ -8,7 +8,7 @@ public class TimeManager : MonoSingleton<TimeManager>
     public float idleTimeLimit = 20f; // 유저가 비활성 상태로 간주되기 전까지의 시간 (초 단위)
     public int reducedFrameRate = 30; // 비활성 상태일 때의 프레임 레이트
     private float lastInputTime; // 마지막으로 입력이 감지된 시간
-    private bool isIdle;
+    public bool isIdle;
     private DateTime idleStartTime; // 비활성 상태가 시작된 시간
     
     void Start()
@@ -48,6 +48,9 @@ public class TimeManager : MonoSingleton<TimeManager>
 
         if (Time.time - lastInputTime > idleTimeLimit)
         {
+            if (DataManager.I.optionData.autoPowerSaving == false)
+                return;
+
             if (isIdle == false)
             {
                 isIdle = true;

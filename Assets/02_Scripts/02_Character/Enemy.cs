@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour, IPooledObject
         hp -= damage;
         
         StageManager.I.IncreaseCount(2);
-        
+        SoundManager.I.PlayHitSound();
         if (hp.IntPart <= 0)
         {
             Die();
