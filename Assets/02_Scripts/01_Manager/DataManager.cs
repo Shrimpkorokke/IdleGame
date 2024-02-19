@@ -22,9 +22,11 @@ public class DataManager : MonoSingleton<DataManager>
 #endif
     }
 
-    public void JsontoPlayerData(string data)
+    public void JsontoPlayerData(string data, Action callback = null)
     {
         playerData = JsonConvert.DeserializeObject<PlayerData>(data);
+        Debug.Log($"!!!! JsonToPlayerData 불림 {playerData.point}");
+        callback?.Invoke();
     }
 
     public void SaveCloud(Action<bool> onCloudSaved = null)

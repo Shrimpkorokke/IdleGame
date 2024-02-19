@@ -17,7 +17,6 @@ public class GPGSManager : MonoSingleton<GPGSManager>
         PlayGamesPlatform.Instance.Events;
 
     public string nickName = "";
-
     void Init()
     {
         var config = new PlayGamesClientConfiguration.Builder().EnableSavedGames().Build();
