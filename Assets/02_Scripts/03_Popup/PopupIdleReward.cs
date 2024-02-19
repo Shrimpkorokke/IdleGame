@@ -30,14 +30,18 @@ public class PopupIdleReward : Popup
         btnObtain.onClick.AddListener(() =>
         {
             GoodsManager.I.ObtainIdleGoods(false);
+#if !UNITY_EDITOR
             DataManager.I.SaveCloud();
+#endif
             this.Close();
         });
 
         btnBG.onClick.AddListener(() => 
         {
             GoodsManager.I.ObtainIdleGoods(false);
+#if !UNITY_EDITOR
             DataManager.I.SaveCloud();
+#endif
             this.Close();
         });
     }

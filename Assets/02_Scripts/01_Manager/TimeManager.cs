@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class TimeManager : MonoSingleton<TimeManager>
 {
@@ -10,10 +11,34 @@ public class TimeManager : MonoSingleton<TimeManager>
     private float lastInputTime; // 마지막으로 입력이 감지된 시간
     public bool isIdle;
     private DateTime idleStartTime; // 비활성 상태가 시작된 시간
-    
+
+    public Button btnSpeed;
+    public GameObject imgNormal;
+    public GameObject imgDouble;
+
+    private void Awake()
+    {
+        btnSpeed.onClick.AddListener(() =>
+        {
+            DataManager.I.optionData.isDoubleSpeed = !DataManager.I.optionData.isDoubleSpeed;
+
+            if(DataManager.I.optionData.isDoubleSpeed)
+                DoubleSpeed();
+            else
+                NormalSpeed();
+
+            DataManager.I.SaveLocal();
+        });
+    }
+
     void Start()
     {
         lastInputTime = Time.time;
+
+        if (DataManager.I.optionData.isDoubleSpeed)
+            DoubleSpeed();
+        else
+            NormalSpeed();
     }
 
     void Update()
@@ -31,7 +56,7 @@ public class TimeManager : MonoSingleton<TimeManager>
                     //PopupManager.I.GetPopup<PopupIdle>().Close();
                     isIdle = false;
                     Application.targetFrameRate = -1;
-                    NormalSpeed();
+                    ReturntoPreSpeed();
                     // 비활성 상태에서 활성 상태로 전환 시 경과한 시간 계산 및 출력
                     TimeSpan timeSpan = DateTime.Now - idleStartTime;
                     
@@ -63,6 +88,7 @@ public class TimeManager : MonoSingleton<TimeManager>
             }
         }
     }
+    
 
     public void Pause()
     {
@@ -71,12 +97,21 @@ public class TimeManager : MonoSingleton<TimeManager>
 
     public void NormalSpeed()
     {
+        imgDouble.SetActive(false);
+        imgNormal.SetActive(true);
         Time.timeScale = 1f;
     }
 
     public void DoubleSpeed()
     {
+        imgDouble.SetActive(true);
+        imgNormal.SetActive(false);
         Time.timeScale = 2f;
+    }
+
+    public void ReturntoPreSpeed()
+    {
+        Time.timeScale = DataManager.I.optionData.isDoubleSpeed? 2f : 1f;
     }
 
     public void HalfSpeed()

@@ -159,7 +159,8 @@ public class DataManager : MonoSingleton<DataManager>
             bgmValue = 1,
             sfxValue = 1,
             shaking = true,
-            autoPowerSaving = true
+            autoPowerSaving = true,
+            isDoubleSpeed = false,
         };
     }
 
@@ -208,5 +209,8 @@ public struct OptionData
     // etc.
     public bool shaking;
     public bool autoPowerSaving;
+
+    // 배속
+    public bool isDoubleSpeed;
     #endregion
 }
