@@ -27,7 +27,7 @@ public class TimeManager : MonoSingleton<TimeManager>
             else
                 NormalSpeed();
 
-            DataManager.I.SaveLocal();
+            DataManager.I.SaveLocalOptionData();
         });
     }
 
@@ -39,6 +39,8 @@ public class TimeManager : MonoSingleton<TimeManager>
             DoubleSpeed();
         else
             NormalSpeed();
+
+        DataManager.I.SaveLocalOptionData();
     }
 
     void Update()

@@ -10,6 +10,9 @@ public class SoundManager : MonoSingleton<SoundManager>
     public AudioClip backgroundMusic; // 배경음
     public AudioClip hitSound; // 몬스터가 타격을 입었을 때 재생할 오디오 클립
 
+    private float hitSoundCooldown = 0.025f; // 타격음 재생 간격 (초)
+    private float lastHitTime = -1f; // 마지막 타격음 재생 시간
+
     private void Start()
     {
         ChangeHitVolume();
@@ -25,8 +28,14 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     public void PlayHitSound()
     {
-        if(TimeManager.I.isIdle == false)
+        if (TimeManager.I.isIdle)
+            return;
+
+        if (Time.time - lastHitTime >= hitSoundCooldown)
+        {
             hitSource.PlayOneShot(hitSound);
+            lastHitTime = Time.time;
+        }
     }
 
     public void ChangeHitVolume()

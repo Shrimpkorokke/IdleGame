@@ -35,7 +35,7 @@ public class DataManager : MonoSingleton<DataManager>
         playerData.point = PlayerManager.I.GetAbilityPoint().ToString();
         playerData.gold = GoodsManager.I.GetGold().ToString();
         playerData.stone = GoodsManager.I.GetStone().ToString();
-
+        playerData.stage = StageManager.I.GetCurrnetStage();
         foreach (var item in PlayerManager.I.trainingSkillLevelDic)
         {
             playerData.trainingLevelDic[item.Key] = item.Value;
@@ -72,11 +72,14 @@ public class DataManager : MonoSingleton<DataManager>
             // 재화, 포인트
             gold = "0", stone = "0", point = "0",
             //레벨, exp
-            level = "0", exp = "100",
+            level = "1", exp = "100",
             // Training Level
-            
             trainingLevelDic = trainingLevel,
-            abilityLevelDic = abilityLevel
+            abilityLevelDic = abilityLevel,
+
+            // 스테이지
+            stage = 1
+
         };
     }
 
@@ -92,7 +95,7 @@ public class DataManager : MonoSingleton<DataManager>
         else
         {
             SetLocalMetaData();
-            SaveLocal();
+            SaveLocalOptionData();
         }
     }
 
@@ -132,8 +135,10 @@ public class DataManager : MonoSingleton<DataManager>
                 //레벨, exp
                 level = "1", exp = "100",
                 // Training Level
-                trainingLevelDic = new(trainingLevel), 
-                abilityLevelDic = new(abilityLevel)
+                trainingLevelDic = new(trainingLevel),
+                abilityLevelDic = new(abilityLevel),
+                // 스테이지
+                stage = 1
             };
 
             //data = JsonUtility.ToJson(this.playerData);
@@ -157,20 +162,48 @@ public class DataManager : MonoSingleton<DataManager>
         {
             // 옵션
             bgmValue = 1,
-            sfxValue = 1,
+            sfxValue = 0.2f,
             shaking = true,
             autoPowerSaving = true,
             isDoubleSpeed = false,
         };
     }
 
-    public void SaveLocal()
+    public void SaveLocalOptionData()
     {
         // Data => Json
         string data = JsonConvert.SerializeObject(this.optionData);
 
         // 저장
         File.WriteAllText(path + "PickaxeMaster_OptionData", data);
+    }
+
+    public void SaveLocalPlayerData()
+    {
+        playerData.level = PlayerManager.I.GetLevel().ToString();
+        playerData.exp = PlayerManager.I.GetCurrentExp().ToString();
+
+        playerData.point = PlayerManager.I.GetAbilityPoint().ToString();
+        playerData.gold = GoodsManager.I.GetGold().ToString();
+        playerData.stone = GoodsManager.I.GetStone().ToString();
+        playerData.stage = StageManager.I.GetCurrnetStage();
+
+        foreach (var item in PlayerManager.I.trainingSkillLevelDic)
+        {
+            playerData.trainingLevelDic[item.Key] = item.Value;
+        }
+
+        foreach (var item in PlayerManager.I.abilitySkillLevelDic)
+        {
+            playerData.abilityLevelDic[item.Key] = item.Value;
+        }
+
+
+        // Data => Json
+        string data = JsonConvert.SerializeObject(this.playerData);
+
+        // 저장
+        File.WriteAllText(path + "PickaxeMaster_PlayerData", data);
     }
 }
 
@@ -197,6 +230,9 @@ public struct PlayerData
     // 훈련 레벨
     public Dictionary<int, int> trainingLevelDic;
     public Dictionary<int, int> abilityLevelDic;
+
+    // stage
+    public int stage;
 }
 
 public struct OptionData

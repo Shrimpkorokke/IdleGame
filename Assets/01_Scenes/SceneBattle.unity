@@ -492,6 +492,7 @@ MonoBehaviour:
   rayLength: 0.9
   txtLevel: {fileID: 1423497391}
   txtAbilityPoint: {fileID: 1844500461}
+  txtNickName: {fileID: 85401364}
 --- !u!114 &23520705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1614,7 +1615,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &85401363
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30013,7 +30014,7 @@ MonoBehaviour:
   bossList: []
   bossSpawned: 0
   currentTime: 0
-  minTime: 0.4
+  minTime: 0.2
   maxTime: 1
   maxCount: 20
   currentCount: 0

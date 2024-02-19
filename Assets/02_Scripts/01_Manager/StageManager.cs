@@ -15,11 +15,12 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField] private Text txtStage;
     [SerializeField] private Slider sliderGuage;
     
-    protected override void Awake()
+
+    private void Start()
     {
+        currentStage = DataManager.I.playerData.stage;
         SetTextStage();
     }
-
     private void Update()
     {
         if (SpawnManager.I.bossSpawned && PlayerManager.I.isAttack)
@@ -40,6 +41,7 @@ public class StageManager : MonoSingleton<StageManager>
     public void IncreaseStage()
     {
         currentStage++;
+        DataManager.I.playerData.stage = currentStage;
         SetTextStage();
     }
 

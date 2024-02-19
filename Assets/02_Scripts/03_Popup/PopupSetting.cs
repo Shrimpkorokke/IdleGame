@@ -56,7 +56,7 @@ public class PopupSetting : Popup
         DataManager.I.optionData.shaking = sliderShaking.value < 1 ? false : true;
         DataManager.I.optionData.autoPowerSaving = SliderPowerSaving.value < 1 ? false : true;
 
-        DataManager.I.SaveLocal();
+        DataManager.I.SaveLocalOptionData();
 
         SoundManager.I.ChangeHitVolume();
         SoundManager.I.ChangeBGMVolume();

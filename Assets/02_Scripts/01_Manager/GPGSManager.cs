@@ -16,7 +16,7 @@ public class GPGSManager : MonoSingleton<GPGSManager>
     IEventsClient Events =>
         PlayGamesPlatform.Instance.Events;
 
-
+    public string nickName = "";
 
     void Init()
     {
@@ -33,6 +33,7 @@ public class GPGSManager : MonoSingleton<GPGSManager>
         PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptAlways, (success) =>
         {
             onLoginSuccess?.Invoke(success == SignInStatus.Success, Social.localUser);
+            nickName = Social.localUser.userName;
         });
     }
 

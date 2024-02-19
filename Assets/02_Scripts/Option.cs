@@ -44,9 +44,10 @@ public class Option : MonoBehaviour
         {
             if (PopupManager.I.IsPopupOpen<PopupSaveResult>())
                 PopupManager.I.GetPopup<PopupSaveResult>().Close();
-
-
-
+#if UNITY_EDITOR
+            DataManager.I.SaveLocalPlayerData();
+            DataManager.I.SaveLocalOptionData();
+#else
             DataManager.I.SaveCloud((success) =>
             {
                 if (PopupManager.I.IsPopupOpen<PopupSaveResult>())
@@ -56,8 +57,9 @@ public class Option : MonoBehaviour
                 popupResult.SetText(success);
 
             });
+#endif
         });
-        
+
         btnTitleExit.onClick.AddListener(() => option.SetActive(false));
         btnBG.onClick.AddListener(() => option.SetActive(false));
     }

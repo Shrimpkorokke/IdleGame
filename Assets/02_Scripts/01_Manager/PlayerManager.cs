@@ -31,7 +31,9 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     [SerializeField] private Text txtLevel;
     [SerializeField] private Text txtAbilityPoint;
-    
+    [SerializeField] private Text txtNickName;
+
+
     private void Awake()
     {
         if(player == null)
@@ -65,7 +67,11 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
         SetTxtAbilityPoint();
         SetTxtLevel();
-        
+#if UNITY_EDITOR
+        txtNickName.text = "Test";
+#else
+        txtNickName.text = GPGSManager.I.nickName;
+#endif
         player.SetAttackSpeed();
         
         StartCoroutine(WaitforReady());
