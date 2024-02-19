@@ -23,7 +23,8 @@ public class PopupIdleReward : Popup
         base.Awake();
         btnBonus.onClick.AddListener(() =>
         {
-
+            TimeManager.I.Pause();
+            RewardedAds.I.LoadAd();
         });
 
         btnObtain.onClick.AddListener(() =>
@@ -35,7 +36,16 @@ public class PopupIdleReward : Popup
 
         btnBG.onClick.AddListener(() => 
         {
+            GoodsManager.I.ObtainIdleGoods(false);
+            DataManager.I.SaveCloud();
             this.Close();
         });
+    }
+    
+    public void GetBonusGoods()
+    {
+        TimeManager.I.NormalSpeed();
+        GoodsManager.I.ObtainIdleGoods(true);
+        DataManager.I.SaveCloud();
     }
 }

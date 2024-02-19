@@ -44,7 +44,7 @@ public class PopupSetting : Popup
     private void LoadData()
     {
         sliderBgm.value = DataManager.I.optionData.bgmValue;
-        sliderSfx.value = DataManager.I.optionData.sfxValue;
+        sliderSfx.value = DataManager.I.optionData.sfxValue * 5;
         sliderShaking.value = DataManager.I.optionData.shaking == true ? 1 : 0;
         SliderPowerSaving.value = DataManager.I.optionData.autoPowerSaving == true ? 1 : 0;
     }
@@ -52,7 +52,7 @@ public class PopupSetting : Popup
     private void SaveData()
     {
         DataManager.I.optionData.bgmValue = sliderBgm.value;
-        DataManager.I.optionData.sfxValue = sliderSfx.value;
+        DataManager.I.optionData.sfxValue = sliderSfx.value / 5;
         DataManager.I.optionData.shaking = sliderShaking.value < 1 ? false : true;
         DataManager.I.optionData.autoPowerSaving = SliderPowerSaving.value < 1 ? false : true;
 

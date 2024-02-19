@@ -31,7 +31,7 @@ public class TimeManager : MonoSingleton<TimeManager>
                     //PopupManager.I.GetPopup<PopupIdle>().Close();
                     isIdle = false;
                     Application.targetFrameRate = -1;
-                    Time.timeScale = 1;
+                    NormalSpeed();
                     // 비활성 상태에서 활성 상태로 전환 시 경과한 시간 계산 및 출력
                     TimeSpan timeSpan = DateTime.Now - idleStartTime;
                     
@@ -56,11 +56,31 @@ public class TimeManager : MonoSingleton<TimeManager>
                 isIdle = true;
                 PopupManager.I.GetPopup<PopupIdle>().Open();
                 Application.targetFrameRate = reducedFrameRate;
-                Time.timeScale = 0.5f;
+                HalfSpeed();
 
                 // 현재 날짜 및 시간 저장
                 idleStartTime = DateTime.Now;
             }
         }
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void NormalSpeed()
+    {
+        Time.timeScale = 1f;
+    }
+
+    public void DoubleSpeed()
+    {
+        Time.timeScale = 2f;
+    }
+
+    public void HalfSpeed()
+    {
+        Time.timeScale = 0.5f;
     }
 }

@@ -28178,7 +28178,7 @@ MonoBehaviour:
   bossList: []
   bossSpawned: 0
   currentTime: 0
-  minTime: 0.2
+  minTime: 0.4
   maxTime: 1
   maxCount: 20
   currentCount: 0
