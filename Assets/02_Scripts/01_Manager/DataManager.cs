@@ -163,7 +163,7 @@ public class DataManager : MonoSingleton<DataManager>
         optionData = new()
         {
             // 옵션
-            bgmValue = 1,
+            bgmValue = 0.2f,
             sfxValue = 0.2f,
             shaking = true,
             autoPowerSaving = true,

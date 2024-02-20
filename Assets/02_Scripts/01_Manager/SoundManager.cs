@@ -17,6 +17,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     {
         ChangeHitVolume();
         ChangeBGMVolume();
+        PlayBGM();
     }
 
     public void PlayBGM()
@@ -41,7 +42,6 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void ChangeHitVolume()
     {
         hitSource.volume = DataManager.I.optionData.sfxValue;
-        Debug.Log($"sfxvolume {DataManager.I.optionData.sfxValue}");
     }
 
     public void ChangeBGMVolume()

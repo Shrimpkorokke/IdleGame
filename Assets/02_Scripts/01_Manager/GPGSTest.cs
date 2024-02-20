@@ -19,8 +19,6 @@ public class GPGSTest : MonoBehaviour
     [SerializeField] private Button btnStartGame;
     private void Awake()
     {
-        
-
         // 로그인
         btnLogin.onClick.AddListener(() =>
         {
@@ -62,6 +60,10 @@ public class GPGSTest : MonoBehaviour
         {
             LoadingSceneController.LoadScene("SceneBattle");
         });
+        btnStartGame.onClick.AddListener(() =>
+        {
+            LoadingSceneController.LoadScene("SceneBattle");
+        });
     }
 
     private void Start()
@@ -90,14 +92,14 @@ public class GPGSTest : MonoBehaviour
                 if (string.IsNullOrEmpty(data) == false)
                 {
                     Debug.Log($"!!!! 데이터가 있음: {data}");
-                    DataManager.I.JsontoPlayerData(data);
+                    DataManager.I.JsontoPlayerData(data, () => ShowBtnStart());
                 }
                 // 데이터가 없을 때
                 else
                 {
                     Debug.Log($"!!!! 데이터가 없음: {data}");
                     DataManager.I.SetCloudMetaData();
-                    SaveCloud();
+                    SaveCloud(() => ShowBtnStart());
                 }
             }
             else
@@ -107,8 +109,20 @@ public class GPGSTest : MonoBehaviour
         });
     }
 
-    public void SaveCloud()
+    public void SaveCloud(Action callback)
     {
-        GPGSManager.I.SaveCloud("PickaxeMaster_PlayerData", DataManager.I.GetJsonPlayerData(), success => log.text = $"{success}");
+        GPGSManager.I.SaveCloud("PickaxeMaster_PlayerData", DataManager.I.GetJsonPlayerData(), success =>
+        {
+            if(success) 
+            {
+                callback?.Invoke();
+                log.text = $"{success}";
+            }
+        });
+    }
+
+    public void ShowBtnStart()
+    {
+        btnStartGame.gameObject.SetActive(true);
     }
 }

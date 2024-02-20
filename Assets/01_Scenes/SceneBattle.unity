@@ -691,7 +691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 23520712}
   hitSource: {fileID: 23520710}
-  backgroundMusic: {fileID: 0}
+  backgroundMusic: {fileID: 8300000, guid: 83248a370a9ea7a49b15cc07c1e477bd, type: 3}
   hitSound: {fileID: 8300000, guid: 36f80ab9028ee7e44b442801b6d618cc, type: 3}
 --- !u!82 &23520712
 AudioSource:
