@@ -35,7 +35,10 @@ public class Option : MonoBehaviour
             if (PopupManager.I.IsPopupOpen<PopupIdle>())
                 PopupManager.I.GetPopup<PopupIdle>().Close();
             else
+            {
                 PopupManager.I.GetPopup<PopupIdle>().Open();
+                TimeManager.I.AutoSaving();
+            }
             
             option.SetActive(false);
         });

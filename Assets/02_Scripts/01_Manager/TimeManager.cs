@@ -75,22 +75,26 @@ public class TimeManager : MonoSingleton<TimeManager>
 
         if (Time.time - lastInputTime > idleTimeLimit)
         {
-            if (DataManager.I.optionData.autoPowerSaving == false)
-                return;
-
-            if (isIdle == false)
-            {
-                isIdle = true;
-                PopupManager.I.GetPopup<PopupIdle>().Open();
-                Application.targetFrameRate = reducedFrameRate;
-                HalfSpeed();
-
-                // 현재 날짜 및 시간 저장
-                idleStartTime = DateTime.Now;
-            }
+            AutoSaving();
         }
     }
     
+    public void AutoSaving()
+    {
+        if (DataManager.I.optionData.autoPowerSaving == false)
+            return;
+
+        if (isIdle == false)
+        {
+            isIdle = true;
+            PopupManager.I.GetPopup<PopupIdle>().Open();
+            Application.targetFrameRate = reducedFrameRate;
+            HalfSpeed();
+
+            // 현재 날짜 및 시간 저장
+            idleStartTime = DateTime.Now;
+        }
+    }
 
     public void Pause()
     {
