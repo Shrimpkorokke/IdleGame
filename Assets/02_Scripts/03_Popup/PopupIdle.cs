@@ -22,6 +22,7 @@ public class PopupIdle : Popup
             if (touch.phase == TouchPhase.Moved)
             {
                 Close();
+                TimeManager.I.ReturntoPreSpeed();
             }
         }
     }

@@ -58,6 +58,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
         level = int.Parse(DataManager.I.playerData.level);
         currentExp = int.Parse(DataManager.I.playerData.exp);
+        abilityPoint = int.Parse(DataManager.I.playerData.point);
 
         // 필요 경험치 설정
         foreach (var VARIABLE in DefaultTable.Level.GetList())

@@ -48,7 +48,7 @@ public class DataManager : MonoSingleton<DataManager>
             playerData.abilityLevelDic[item.Key] = item.Value;
         }
 
-        GPGSManager.I.SaveCloud("PickaxeMaster_PlayerData", GetJsonPlayerData(), onCloudSaved);
+        GPGSManager.I.SaveCloud("PickaxeIdle_PlayerData", GetJsonPlayerData(), onCloudSaved);
     }
 
     public void SetCloudMetaData()
@@ -88,9 +88,9 @@ public class DataManager : MonoSingleton<DataManager>
     public void LoadLocalOptionData()
     {
         // 파일이 있으면 불러옴
-        if (File.Exists(path + "PickaxeMaster_OptionData"))
+        if (File.Exists(path + "PickaxeIdle_OptionData"))
         {
-            string data = File.ReadAllText(path + "PickaxeMaster_OptionData");
+            string data = File.ReadAllText(path + "PickaxeIdle_OptionData");
             optionData = JsonUtility.FromJson<OptionData>(data);
         }
         // 파일이 없으면 메타데이터 생성 후 저장
@@ -107,9 +107,9 @@ public class DataManager : MonoSingleton<DataManager>
     {
          string data = "";
         // 파일이 있으면 불러옴
-        if (File.Exists(path + "PickaxeMaster_PlayerData"))
+        if (File.Exists(path + "PickaxeIdle_PlayerData"))
         {
-            data = File.ReadAllText(path + "PickaxeMaster_PlayerData");
+            data = File.ReadAllText(path + "PickaxeIdle_PlayerData");
         }
         // 파일이 없으면 메타데이터 생성 후 저장
         else
@@ -145,7 +145,7 @@ public class DataManager : MonoSingleton<DataManager>
 
             //data = JsonUtility.ToJson(this.playerData);
             data = JsonConvert.SerializeObject(this.playerData);
-            File.WriteAllText(path + "PickaxeMaster_PlayerData", data);
+            File.WriteAllText(path + "PickaxeIdle_PlayerData", data);
         }
         //playerData = JsonUtility.FromJson<PlayerData>(data);
         playerData = JsonConvert.DeserializeObject<PlayerData>(data);
@@ -177,7 +177,7 @@ public class DataManager : MonoSingleton<DataManager>
         string data = JsonConvert.SerializeObject(this.optionData);
 
         // 저장
-        File.WriteAllText(path + "PickaxeMaster_OptionData", data);
+        File.WriteAllText(path + "PickaxeIdle_OptionData", data);
     }
 
     public void SaveLocalPlayerData()
@@ -205,7 +205,7 @@ public class DataManager : MonoSingleton<DataManager>
         string data = JsonConvert.SerializeObject(this.playerData);
 
         // 저장
-        File.WriteAllText(path + "PickaxeMaster_PlayerData", data);
+        File.WriteAllText(path + "PickaxeIdle_PlayerData", data);
     }
 }
 

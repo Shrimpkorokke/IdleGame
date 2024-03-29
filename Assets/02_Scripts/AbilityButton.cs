@@ -24,7 +24,33 @@ public class AbilityButton : MonoBehaviour
         if(btn != null)
             btn.SetButtonAction(() => PlayerManager.I.IncreaseAbility(this));
         SubscribeToDictionary();
-        SetPointTxt();
+
+        // 텍스트 설정
+        var level = PlayerManager.I.abilitySkillLevelDic[TID];
+        var maxLevel = DefaultTable.Ability.GetList().Find(x => x.TID == TID).MaxLevel;
+
+        if (level < maxLevel)
+        {
+            txtLevel.text = $"Lv.{level}";
+            SetPointTxt(false);
+        }
+        else
+        {
+            txtLevel.text = $"Lv.Max";
+            SetPointTxt(true);
+        }
+
+        // 커버 설정
+        var ability = DefaultTable.Ability.GetList().Find(x => x.TID == TID);
+        var unlockLevel = ability.UnlockLevel;
+
+        if (PlayerManager.I.abilitySkillLevelDic.ContainsKey(TID))
+        {
+            if (PlayerManager.I.abilitySkillLevelDic[ability.UnlockTID] >= ability.UnlockLevel)
+            {
+                UnlockCover();
+            }
+        }
     }
     
     public void SubscribeToDictionary()
@@ -38,12 +64,12 @@ public class AbilityButton : MonoBehaviour
             {
                 if (change.NewValue >= unlockLevel)
                 {
-                    AAAA();
+                    UnlockCover();
                 }
             }).AddTo(this);
     }
 
-    public void AAAA()
+    public void UnlockCover()
     {
         coverUnlock.SetActive(false);
     }
@@ -58,6 +84,6 @@ public class AbilityButton : MonoBehaviour
     
     public void SetPointTxt(bool isMaxLevel = false)
     {
-        txtPoint.text = isMaxLevel ? "Max" :GetRequiredPoint().ToString();
+        txtPoint.text = isMaxLevel ? "Max" : GetRequiredPoint().ToString();
     }
 }

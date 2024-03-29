@@ -48,7 +48,7 @@ public class PopupIdleReward : Popup
     
     public void GetBonusGoods()
     {
-        TimeManager.I.NormalSpeed();
+        TimeManager.I.ReturntoPreSpeed();
         GoodsManager.I.ObtainIdleGoods(true);
         DataManager.I.SaveCloud();
     }
