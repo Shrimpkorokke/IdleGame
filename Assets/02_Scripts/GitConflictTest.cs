@@ -16,16 +16,6 @@ public class GitConflictTest : MonoBehaviour
         // git Desktop 16
         // git Desktop 17
         // git Desktop 18
-
-        // SourceTree 1
-        // SourceTree 2
-        // SourceTree 2
-        // SourceTree 2
-        // SourceTree 2
-        // SourceTree 2
-
-        // Sourcetree fdsafdsfds
-        // sourcetree aaaaaa
     }
 
     // Update is called once per frame
