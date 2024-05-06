@@ -19,7 +19,7 @@ public class GitConflictTest : MonoBehaviour
 
 
         // git sourcetreeeeeeee
-        // git desktopppppppppp
+        // git sourcetreeeeeeee
         // git desktop 19
     }
 
