@@ -71,6 +71,14 @@ public class PopupEquipment : Popup
                 // 다시 세팅
                 SetWeapon();
             }
+            else
+            {
+                if (PopupManager.I.IsPopupOpen<PopupYes>())
+                    PopupManager.I.GetPopup<PopupYes>().Close();
+                var popupResult = PopupManager.I.GetPopup<PopupYes>();
+                popupResult.Open();
+                popupResult.SetText();
+            }
         });
         
         btnEquipment.onClick.AddListener(() =>
